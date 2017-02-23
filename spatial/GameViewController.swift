@@ -11,38 +11,65 @@ import QuartzCore
 import SceneKit
 import SpriteKit
 
+extension Array {
+    var shuffle:[Element] {
+        var elements = self
+        for index in 0..<elements.count {
+            let anotherIndex = Int(arc4random_uniform(UInt32(elements.count-index)))+index
+            if anotherIndex != index {
+                swap(&elements[index], &elements[anotherIndex])
+            }
+        }
+        return elements
+    }
+}
+
 class GameViewController: UIViewController {
     
     var currentYAngle: Float = 0.0
     
     var currentXAngle: Float = 0.0
-   
     
+    var currentAnswer: Bool = false
+   
     
     var boxNode: SCNNode = SCNNode()
     
     var box1Node: SCNNode = SCNNode()
-    var box2Node: SCNNode = SCNNode()
-    var box3Node: SCNNode = SCNNode()
-    var box4Node: SCNNode = SCNNode()
+
     
     var cubeColorArray:[UIColor]  = []
     
     var mainBoxView: SCNView = SCNView()
     
     var questionBoxView: SCNView = SCNView()
+    
+    var diceView: DiceView = DiceView()
+    
+    var cameraNode = SCNNode()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        buildQuestions()
         
+        //build questions
+//        cubeColorArray.append(UIColor.green)
+//        cubeColorArray.append(UIColor.red)
+//        cubeColorArray.append(UIColor.blue)
+//        cubeColorArray.append(UIColor.yellow)
+//        cubeColorArray.append(UIColor.purple)
+//        cubeColorArray.append(UIColor.gray)
+        
+        diceView = DiceView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height/3))
+        self.view.addSubview(diceView)
+        diceView.build2DCube(colorArray: cubeColorArray)
         
         // create a new scene
-       // let scene = SCNScene(named: "art.scnassets/ship.scn")!
         let scene = SCNScene()
         
         // create and add a camera to the scene
-        let cameraNode = SCNNode()
+        cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
         scene.rootNode.addChildNode(cameraNode)
         
@@ -50,88 +77,23 @@ class GameViewController: UIViewController {
         boxNode = SCNNode(geometry: boxGeometry)
         scene.rootNode.addChildNode(boxNode)
         
-        let box1Geometry = SCNBox(width: 3.0, height: 3.0, length: 3.0, chamferRadius: 0.1)
-        box1Node = SCNNode(geometry: box1Geometry)
-        scene.rootNode.addChildNode(box1Node)
        
-        
-        let roAngle = (Float)(M_PI)/4
-        let roYMat = SCNMatrix4MakeRotation(roAngle, 0, 1, 0)
-        
-        let roXMat = SCNMatrix4MakeRotation(roAngle, 1, 0, 0)
-        
-        let finalMat = SCNMatrix4Mult(roYMat, roXMat)
-        
-        box1Node.transform = finalMat
-        
-        print(box1Node.position)
-        
        
-        
-        
-      
-        
-        
-        let greenMaterial             =  SCNMaterial()
-        greenMaterial.diffuse.contents          = UIColor.green
-        greenMaterial.locksAmbientWithDiffuse     = true;
-        
-        
-        let redMaterial                = SCNMaterial();
-        redMaterial.diffuse.contents            = UIColor.red;
-        redMaterial.locksAmbientWithDiffuse     = true;
-        
-        let blueMaterial                = SCNMaterial();
-        blueMaterial.diffuse.contents            = UIColor.blue;
-        blueMaterial.locksAmbientWithDiffuse     = true;
-        
-        let yellowMaterial                = SCNMaterial();
-        yellowMaterial.diffuse.contents            = UIColor.yellow;
-        yellowMaterial.locksAmbientWithDiffuse     = true;
-        
-        let purpleMaterial                = SCNMaterial();
-        purpleMaterial.diffuse.contents            = UIColor.purple;
-        purpleMaterial.locksAmbientWithDiffuse     = true;
-        
-        let magentaMaterial                = SCNMaterial();
-        magentaMaterial.diffuse.contents            = UIColor.gray;
-        magentaMaterial.locksAmbientWithDiffuse     = true;
-
-        
-        
-        boxNode.geometry?.materials = [greenMaterial,  redMaterial,    blueMaterial,
-                                       yellowMaterial, purpleMaterial, magentaMaterial]
-        
-        box1Node.geometry?.materials = [greenMaterial,  redMaterial,    blueMaterial,
-                                       yellowMaterial, purpleMaterial, magentaMaterial]
-        box2Node.geometry?.materials = [greenMaterial,  redMaterial,    blueMaterial,
-                                       yellowMaterial, purpleMaterial, magentaMaterial]
-        box3Node.geometry?.materials = [greenMaterial,  redMaterial,    blueMaterial,
-                                       yellowMaterial, purpleMaterial, magentaMaterial]
-        box4Node.geometry?.materials = [greenMaterial,  redMaterial,    blueMaterial,
-                                       yellowMaterial, purpleMaterial, magentaMaterial]
-        
-        
-        
     
-
+       
+        //build material array
+        
+       buildBoxSides()
+        
+       
         
         // place the camera
         cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
         
         
-        cubeColorArray.append(UIColor.green)
-        cubeColorArray.append(UIColor.red)
-        cubeColorArray.append(UIColor.blue)
-        cubeColorArray.append(UIColor.yellow)
-        cubeColorArray.append(UIColor.purple)
-        cubeColorArray.append(UIColor.gray)
-        
-        let diceView = DiceView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height/3))
-        self.view.addSubview(diceView)
-        diceView.build2DCube(colorArray: cubeColorArray)
        
-        mainBoxView.frame = CGRect(x: 0, y: self.view.frame.height/3*2 , width: self.view.frame.width, height: self.view.frame.height/3)
+       
+        mainBoxView.frame = CGRect(x: 0, y: self.view.frame.height/3 , width: self.view.frame.width, height: self.view.frame.height/3)
         mainBoxView.backgroundColor = UIColor.white
         
         self.view.addSubview(mainBoxView)
@@ -144,7 +106,7 @@ class GameViewController: UIViewController {
         scnView.scene = scene
         
         // allows the user to manipulate the camera
-        scnView.allowsCameraControl = true
+        //scnView.allowsCameraControl = true
         
         // show statistics such as fps and timing information
         scnView.showsStatistics = true
@@ -155,42 +117,137 @@ class GameViewController: UIViewController {
         scnView.autoenablesDefaultLighting = true
         
         
-        questionBoxView.frame = CGRect(x: 0, y: self.view.frame.height/3 , width: self.view.frame.width, height: self.view.frame.height/3)
-        questionBoxView.backgroundColor = UIColor.white
+        let buttonsView = UIView(frame: CGRect(x: 0, y: self.view.frame.height/3*2 , width: self.view.frame.width, height: self.view.frame.height/3))
         
-        self.view.addSubview(questionBoxView)
+        self.view.addSubview(buttonsView)
         
-        let qScene = SCNScene()
-        
-        // create and add a camera to the scene
-        let qCameraNode = SCNNode()
-        qCameraNode.camera = SCNCamera()
-        qScene.rootNode.addChildNode(qCameraNode)
-        
-        qScene.rootNode.addChildNode(box1Node)
-        // place the camera
-        qCameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
-        
-        questionBoxView.scene = qScene
-        
-        // allows the user to manipulate the camera
-        //squestionBoxView.allowsCameraControl = true
-        
-        // show statistics such as fps and timing information
-        questionBoxView.showsStatistics = true
-        
-        // configure the view
-        questionBoxView.backgroundColor = UIColor.black
-        
-        questionBoxView.autoenablesDefaultLighting = true
-        
-    
+        buttonsView.backgroundColor = UIColor.orange
         
         
+        let marginButton = 20;
+        let buttonW = 80
+        let buttonH = 50
         
-
+        let yesButton:UIButton = UIButton(frame: CGRect(x: marginButton, y: marginButton, width: buttonW, height: buttonH))
+        yesButton.backgroundColor = UIColor.white
+        yesButton.setTitle("Yes", for: .normal)
+        yesButton.setTitleColor(UIColor.green, for:  .normal)
+        yesButton.addTarget(self, action:#selector(self.yesButtonClicked), for: .touchUpInside)
+        buttonsView.addSubview(yesButton)
+        
+        
+        let noButton:UIButton = UIButton(frame: CGRect(x: marginButton * 2 + buttonW, y: marginButton, width: buttonW, height: buttonH))
+        noButton.backgroundColor = UIColor.white
+        noButton.setTitle("No", for: .normal)
+        noButton.setTitleColor(UIColor.red, for:  .normal)
+        noButton.addTarget(self, action:#selector(self.noButtonClicked), for: .touchUpInside)
+        buttonsView.addSubview(noButton)
+        
+        
+        let tipsButton:UIButton = UIButton(frame: CGRect(x: marginButton * 3 + 2 * buttonW, y: marginButton, width: buttonW, height: buttonH))
+        tipsButton.backgroundColor = UIColor.white
+        tipsButton.setTitle("Tips", for: .normal)
+        tipsButton.setTitleColor(UIColor.red, for:  .normal)
+        tipsButton.addTarget(self, action:#selector(self.tipsButtonClicked), for: .touchUpInside)
+        buttonsView.addSubview(tipsButton)
+        
+        
+      
+        
         
      
+    }
+    
+    func uniqueRandoms(numberOfRandoms: Int, minNum: Int, maxNum: UInt32) -> [Int] {
+        var uniqueNumbers = Set<Int>()
+        while uniqueNumbers.count < numberOfRandoms {
+            uniqueNumbers.insert(Int(arc4random_uniform(maxNum + 1)) + minNum)
+        }
+        return Array(uniqueNumbers).shuffle
+    }
+    
+    
+    func buildQuestions(){
+        
+        cubeColorArray.removeAll()
+        let colorArray = uniqueRandoms(numberOfRandoms: 6, minNum: 0, maxNum: 5)
+        
+        for item in colorArray {
+            switch item {
+            case 0:
+                cubeColorArray.append(UIColor.green)
+            case 1:
+                cubeColorArray.append(UIColor.red)
+            case 2:
+                cubeColorArray.append(UIColor.blue)
+            case 3:
+                cubeColorArray.append(UIColor.yellow)
+            case 4:
+                cubeColorArray.append(UIColor.purple)
+            case 5:
+                cubeColorArray.append(UIColor.gray)
+            default:
+                print("error")
+            }
+        }
+        
+        if(colorArray[0] <= 2) {
+            self.currentAnswer = false
+        }
+        else {
+            self.currentAnswer = true
+        }
+
+        
+        
+        
+    }
+    
+    
+    func buildBoxSides() {
+        var materialArray:[SCNMaterial] = []
+        
+        
+        
+        for color in cubeColorArray {
+            let materialItem = SCNMaterial()
+            materialItem.diffuse.contents  =  color
+            materialItem.locksAmbientWithDiffuse = true;
+            materialArray.append(materialItem)
+            
+        }
+        
+        boxNode.geometry?.materials = materialArray
+        
+        let roAngle = (Float)(M_PI)/4
+        let roYMat = SCNMatrix4MakeRotation(roAngle, 0, 1, 0)
+        
+        let roXMat = SCNMatrix4MakeRotation(roAngle, 1, 0, 0)
+        
+        let finalMat = SCNMatrix4Mult(roYMat, roXMat)
+        
+        boxNode.transform = finalMat
+        
+        mainBoxView.pointOfView = cameraNode
+
+    }
+    
+    func yesButtonClicked() {
+        buildQuestions()
+        diceView.build2DCube(colorArray: cubeColorArray)
+        
+        buildBoxSides()
+        mainBoxView.allowsCameraControl = false
+        
+    }
+    
+    func noButtonClicked() {
+        print("no Button Clicked")
+    }
+    
+    func tipsButtonClicked() {
+        print("tips Button Clicked")
+        mainBoxView.allowsCameraControl = true
     }
     
 

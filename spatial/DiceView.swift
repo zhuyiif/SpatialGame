@@ -68,14 +68,18 @@ class DiceView: UIView {
         let noButton:UIButton = UIButton(frame: CGRect(x: (Int)(self.frame.width/2) + margin + 80, y: margin, width: 80, height: 50))
         noButton.backgroundColor = UIColor.white
         noButton.setTitle("No", for: .normal)
-        noButton.setTitleColor(UIColor.green, for:  .normal)
+        noButton.setTitleColor(UIColor.red, for:  .normal)
+        noButton.addTarget(self, action:#selector(self.noButtonClicked), for: .touchUpInside)
+        self.addSubview(noButton)
+        
+        
+        let tipsButton:UIButton = UIButton(frame: CGRect(x: (Int)(self.frame.width/2) + margin + 80, y: margin, width: 80, height: 50))
+        noButton.backgroundColor = UIColor.white
+        noButton.setTitle("No", for: .normal)
+        noButton.setTitleColor(UIColor.red, for:  .normal)
         noButton.addTarget(self, action:#selector(self.noButtonClicked), for: .touchUpInside)
         self.addSubview(noButton)
 
-        
-
-
-    
       
     }
     
