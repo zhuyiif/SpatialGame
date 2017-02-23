@@ -11,34 +11,17 @@ import QuartzCore
 import SceneKit
 import SpriteKit
 
-extension Array {
-    var shuffle:[Element] {
-        var elements = self
-        for index in 0..<elements.count {
-            let anotherIndex = Int(arc4random_uniform(UInt32(elements.count-index)))+index
-            if anotherIndex != index {
-                swap(&elements[index], &elements[anotherIndex])
-            }
-        }
-        return elements
-    }
-}
+
 
 class GameViewController: UIViewController {
     
-    var currentYAngle: Float = 0.0
-    
-    var currentXAngle: Float = 0.0
-    
     var currentAnswer: Bool = false
-   
+    
     
     var boxNode: SCNNode = SCNNode()
     
-    var box1Node: SCNNode = SCNNode()
-
-    
     var cubeColorArray:[UIColor]  = []
+    var wrongCubeColorArray:[UIColor]  = []
     
     var mainBoxView: SCNView = SCNView()
     
@@ -46,25 +29,25 @@ class GameViewController: UIViewController {
     
     var diceView: DiceView = DiceView()
     
+    var questionButtonsView: QuestionAndButtonsView = QuestionAndButtonsView()
+    
     var cameraNode = SCNNode()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        buildQuestions()
-        
-        //build questions
-//        cubeColorArray.append(UIColor.green)
-//        cubeColorArray.append(UIColor.red)
-//        cubeColorArray.append(UIColor.blue)
-//        cubeColorArray.append(UIColor.yellow)
-//        cubeColorArray.append(UIColor.purple)
-//        cubeColorArray.append(UIColor.gray)
+    
+    func setupViews() {
+        setupDiceView()
+        setupMainBoxView()
+        setupQuestionButtonsView()
+    }
+    
+    func setupDiceView() {
         
         diceView = DiceView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height/3))
         self.view.addSubview(diceView)
-        diceView.build2DCube(colorArray: cubeColorArray)
+        diceView.backgroundColor = UIColor.black
         
+    }
+    
+    func setupMainBoxView() {
         // create a new scene
         let scene = SCNScene()
         
@@ -76,28 +59,15 @@ class GameViewController: UIViewController {
         let boxGeometry = SCNBox(width: 5.0, height: 5.0, length: 5.0, chamferRadius: 0.2)
         boxNode = SCNNode(geometry: boxGeometry)
         scene.rootNode.addChildNode(boxNode)
-        
-       
-       
     
-       
-        //build material array
-        
-       buildBoxSides()
-        
-       
-        
         // place the camera
         cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
         
         
-       
-       
         mainBoxView.frame = CGRect(x: 0, y: self.view.frame.height/3 , width: self.view.frame.width, height: self.view.frame.height/3)
         mainBoxView.backgroundColor = UIColor.white
         
         self.view.addSubview(mainBoxView)
-        
         
         // retrieve the SCNView
         let scnView = mainBoxView
@@ -116,46 +86,28 @@ class GameViewController: UIViewController {
         
         scnView.autoenablesDefaultLighting = true
         
+    }
+    
+    func setupQuestionButtonsView() {
+        questionButtonsView = QuestionAndButtonsView(frame: CGRect(x: 0, y: self.view.frame.height/3*2 , width: self.view.frame.width, height: self.view.frame.height/3))
         
-        let buttonsView = UIView(frame: CGRect(x: 0, y: self.view.frame.height/3*2 , width: self.view.frame.width, height: self.view.frame.height/3))
+        self.view.addSubview(questionButtonsView)
         
-        self.view.addSubview(buttonsView)
+        questionButtonsView.backgroundColor = UIColor.orange
+        questionButtonsView.yesButton.addTarget(self, action:#selector(self.yesButtonClicked), for: .touchUpInside)
+        questionButtonsView.noButton.addTarget(self, action:#selector(self.noButtonClicked), for: .touchUpInside)
+        questionButtonsView.tipsButton.addTarget(self, action:#selector(self.tipsButtonClicked), for: .touchUpInside)
+        questionButtonsView.tryNext.addTarget(self, action:#selector(self.nextButtonClicked), for: .touchUpInside)
         
-        buttonsView.backgroundColor = UIColor.orange
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        setupViews()
         
-        let marginButton = 20;
-        let buttonW = 80
-        let buttonH = 50
+        buildQuestions()
         
-        let yesButton:UIButton = UIButton(frame: CGRect(x: marginButton, y: marginButton, width: buttonW, height: buttonH))
-        yesButton.backgroundColor = UIColor.white
-        yesButton.setTitle("Yes", for: .normal)
-        yesButton.setTitleColor(UIColor.green, for:  .normal)
-        yesButton.addTarget(self, action:#selector(self.yesButtonClicked), for: .touchUpInside)
-        buttonsView.addSubview(yesButton)
-        
-        
-        let noButton:UIButton = UIButton(frame: CGRect(x: marginButton * 2 + buttonW, y: marginButton, width: buttonW, height: buttonH))
-        noButton.backgroundColor = UIColor.white
-        noButton.setTitle("No", for: .normal)
-        noButton.setTitleColor(UIColor.red, for:  .normal)
-        noButton.addTarget(self, action:#selector(self.noButtonClicked), for: .touchUpInside)
-        buttonsView.addSubview(noButton)
-        
-        
-        let tipsButton:UIButton = UIButton(frame: CGRect(x: marginButton * 3 + 2 * buttonW, y: marginButton, width: buttonW, height: buttonH))
-        tipsButton.backgroundColor = UIColor.white
-        tipsButton.setTitle("Tips", for: .normal)
-        tipsButton.setTitleColor(UIColor.red, for:  .normal)
-        tipsButton.addTarget(self, action:#selector(self.tipsButtonClicked), for: .touchUpInside)
-        buttonsView.addSubview(tipsButton)
-        
-        
-      
-        
-        
-     
     }
     
     func uniqueRandoms(numberOfRandoms: Int, minNum: Int, maxNum: UInt32) -> [Int] {
@@ -171,7 +123,6 @@ class GameViewController: UIViewController {
         
         cubeColorArray.removeAll()
         let colorArray = uniqueRandoms(numberOfRandoms: 6, minNum: 0, maxNum: 5)
-        
         for item in colorArray {
             switch item {
             case 0:
@@ -191,14 +142,19 @@ class GameViewController: UIViewController {
             }
         }
         
+        
         if(colorArray[0] <= 2) {
             self.currentAnswer = false
+            
         }
         else {
             self.currentAnswer = true
+            
+            
         }
-
         
+        diceView.build2DCube(colorArray: cubeColorArray)
+        buildBoxSides()
         
         
     }
@@ -207,41 +163,133 @@ class GameViewController: UIViewController {
     func buildBoxSides() {
         var materialArray:[SCNMaterial] = []
         
-        
-        
-        for color in cubeColorArray {
-            let materialItem = SCNMaterial()
-            materialItem.diffuse.contents  =  color
-            materialItem.locksAmbientWithDiffuse = true;
-            materialArray.append(materialItem)
+        if !self.currentAnswer {
+            
+            for (index,element) in cubeColorArray.enumerated() {
+                let materialItem = SCNMaterial()
+                
+                if(index == 0) {
+                    materialItem.diffuse.contents  =  cubeColorArray[1]
+                }
+                else if(index == 1) {
+                    materialItem.diffuse.contents  =  cubeColorArray[0]
+                }
+                else {
+                    materialItem.diffuse.contents = element
+                }
+                materialItem.locksAmbientWithDiffuse = true;
+                materialArray.append(materialItem)
+                
+            }
+        }
+        else {
+            for (_,element) in cubeColorArray.enumerated() {
+                let materialItem = SCNMaterial()
+                
+                
+                materialItem.diffuse.contents = element
+                
+                materialItem.locksAmbientWithDiffuse = true;
+                materialArray.append(materialItem)
+            }
             
         }
         
         boxNode.geometry?.materials = materialArray
         
-        let roAngle = (Float)(M_PI)/4
-        let roYMat = SCNMatrix4MakeRotation(roAngle, 0, 1, 0)
         
-        let roXMat = SCNMatrix4MakeRotation(roAngle, 1, 0, 0)
-        
-        let finalMat = SCNMatrix4Mult(roYMat, roXMat)
-        
-        boxNode.transform = finalMat
+        if self.currentAnswer {
+            
+            
+            print("correct ")
+            
+            
+            
+            var rotateXNumber = arc4random_uniform(3)
+            var rotateYNumber = arc4random_uniform(3)
+            
+            switch rotateXNumber {
+            case 0:
+                rotateXNumber = 1
+            case 1:
+                rotateXNumber = 3
+            case 2:
+                rotateXNumber = 5
+            default:
+                print("error")
+            }
+            
+            switch rotateYNumber {
+            case 0:
+                rotateYNumber = 1
+            case 1:
+                rotateYNumber = 3
+            case 2:
+                rotateYNumber = 5
+            default:
+                print("error")
+            }
+            
+            let roYAngle = (Float)(M_PI)/4 * (Float)(rotateYNumber)
+            let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
+            
+            let roXAngle = (Float)(M_PI)/4 * (Float)(rotateXNumber)
+            let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
+            
+            let finalMat = SCNMatrix4Mult(roYMat, roXMat)
+            
+            boxNode.transform = finalMat
+        }
+        else {
+            
+            print("wrong  ")
+            
+            let roYAngle = (Float)(M_PI)/4
+            let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
+            
+            let roXAngle = (Float)(M_PI)/4
+            let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
+            
+            let finalMat = SCNMatrix4Mult(roYMat, roXMat)
+            
+            boxNode.transform = finalMat
+            
+        }
         
         mainBoxView.pointOfView = cameraNode
-
+        
+    }
+    
+    func showAlert(isRight:Bool) {
+        
+        
+        if (isRight) {
+            let alertController = UIAlertController(title: "Congrat", message:
+                "You are Awesome", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
+        else {
+            let alertController = UIAlertController(title: "Sorry", message:
+                "Try next", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     func yesButtonClicked() {
-        buildQuestions()
-        diceView.build2DCube(colorArray: cubeColorArray)
         
-        buildBoxSides()
-        mainBoxView.allowsCameraControl = false
+       
+        showAlert(isRight: self.currentAnswer)
+        
+        
         
     }
     
     func noButtonClicked() {
+        showAlert(isRight: !self.currentAnswer)
         print("no Button Clicked")
     }
     
@@ -249,91 +297,13 @@ class GameViewController: UIViewController {
         print("tips Button Clicked")
         mainBoxView.allowsCameraControl = true
     }
-    
-
-    
-    func rotateXGesture (_ sender: UIPanGestureRecognizer) {
+    func nextButtonClicked() {
         
-        let translation = sender.translation(in: sender.view)
-        
-        var newXAngle = (Float)(translation.y)*(Float)(M_PI)/180.0
-        
-        newXAngle += currentXAngle
-        
-        
-        
-        boxNode.transform = SCNMatrix4MakeRotation(newXAngle, 1, 0, 0)
-        
-        
-        
-        if(sender.state == UIGestureRecognizerState.ended) {
-            
-            currentXAngle = newXAngle
-            
-        }
+        buildQuestions()
+        mainBoxView.allowsCameraControl = false
         
     }
     
-    func rotateYGesture (_ sender: UIPanGestureRecognizer) {
-        
-        let translation = sender.translation(in: sender.view)
-        
-        var newYAngle = (Float)(translation.x)*(Float)(M_PI)/180.0
-        
-        newYAngle += currentYAngle
-        
-        
-        
-        boxNode.transform = SCNMatrix4MakeRotation(newYAngle, 0, 1, 0)
-        
-        
-        
-        if(sender.state == UIGestureRecognizerState.ended) {
-            
-            currentYAngle = newYAngle
-            
-        }
-        
-  
-        
-    }
-    
-    
-    func rotateGesture (_ sender: UIPanGestureRecognizer) {
-        
-        let translation = sender.translation(in: sender.view!)
-        
-        var newAngleX = (Float)(translation.y)*(Float)(M_PI)/180.0
-        newAngleX += currentXAngle
-        
-        var newAngleY = (Float)(translation.x)*(Float)(M_PI)/180.0
-        newAngleY += currentYAngle
-        
-        let matrix = boxNode.transform
-        
-        let rotateMatrix = SCNMatrix4Mult(SCNMatrix4MakeRotation(newAngleY, 0, 1, 0),SCNMatrix4MakeRotation(newAngleX, 1, 0, 0))
-        
-        let resultMatrix = SCNMatrix4Mult(matrix,rotateMatrix)
-
-
-        
-        boxNode.transform = rotateMatrix
-        
-        
-    
-        
-        
-        if(sender.state == UIGestureRecognizerState.ended) {
-            currentXAngle = newAngleX
-            currentYAngle = newAngleY
-        }
-    
-    }
-        
-    
-    
-    
-
     
     
     func handleTap(_ gestureRecognize: UIGestureRecognizer) {
@@ -372,7 +342,7 @@ class GameViewController: UIViewController {
     }
     
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -380,16 +350,12 @@ class GameViewController: UIViewController {
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
+        return UIInterfaceOrientationMask.portrait
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
-
+    
 }
