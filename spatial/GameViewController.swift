@@ -28,7 +28,9 @@ class GameViewController: UIViewController {
     
     var cubeColorArray:[UIColor]  = []
     
-    var mainBoxView: UIView = UIView()
+    var mainBoxView: SCNView = SCNView()
+    
+    var questionBoxView: SCNView = SCNView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +41,6 @@ class GameViewController: UIViewController {
        // let scene = SCNScene(named: "art.scnassets/ship.scn")!
         let scene = SCNScene()
         
-       
         // create and add a camera to the scene
         let cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
@@ -49,10 +50,25 @@ class GameViewController: UIViewController {
         boxNode = SCNNode(geometry: boxGeometry)
         scene.rootNode.addChildNode(boxNode)
         
-        let box1Geometry = SCNBox(width: 2.0, height: 2.0, length: 2.0, chamferRadius: 0.1)
+        let box1Geometry = SCNBox(width: 3.0, height: 3.0, length: 3.0, chamferRadius: 0.1)
         box1Node = SCNNode(geometry: box1Geometry)
         scene.rootNode.addChildNode(box1Node)
-        box1Node.position = SCNVector3Make(0, -4, 0);
+       
+        
+        let roAngle = (Float)(M_PI)/4
+        let roYMat = SCNMatrix4MakeRotation(roAngle, 0, 1, 0)
+        
+        let roXMat = SCNMatrix4MakeRotation(roAngle, 1, 0, 0)
+        
+        let finalMat = SCNMatrix4Mult(roYMat, roXMat)
+        
+        box1Node.transform = finalMat
+        
+        print(box1Node.position)
+        
+       
+        
+        
       
         
         
@@ -101,11 +117,28 @@ class GameViewController: UIViewController {
 
         
         // place the camera
-        cameraNode.position = SCNVector3(x: 0, y: 0, z: 25)
+        cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
+        
+        
+        cubeColorArray.append(UIColor.green)
+        cubeColorArray.append(UIColor.red)
+        cubeColorArray.append(UIColor.blue)
+        cubeColorArray.append(UIColor.yellow)
+        cubeColorArray.append(UIColor.purple)
+        cubeColorArray.append(UIColor.gray)
+        
+        let diceView = DiceView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height/3))
+        self.view.addSubview(diceView)
+        diceView.build2DCube(colorArray: cubeColorArray)
+       
+        mainBoxView.frame = CGRect(x: 0, y: self.view.frame.height/3*2 , width: self.view.frame.width, height: self.view.frame.height/3)
+        mainBoxView.backgroundColor = UIColor.white
+        
+        self.view.addSubview(mainBoxView)
         
         
         // retrieve the SCNView
-        let scnView = self.view as! SCNView
+        let scnView = mainBoxView
         
         // set the scene to the view
         scnView.scene = scene
@@ -119,36 +152,45 @@ class GameViewController: UIViewController {
         // configure the view
         scnView.backgroundColor = UIColor.black
         
-        // add a tap gesture recognizer
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-      //  scnView.addGestureRecognizer(tapGesture)
-        
-   
-        
-//        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(rotateGesture(_:)))
-//        panRecognizer.maximumNumberOfTouches = 1
-//        panRecognizer.minimumNumberOfTouches = 1
-//        
-//        scnView.addGestureRecognizer(panRecognizer)
-        
         scnView.autoenablesDefaultLighting = true
         
-        cubeColorArray.append(UIColor.green)
-        cubeColorArray.append(UIColor.red)
-        cubeColorArray.append(UIColor.blue)
-        cubeColorArray.append(UIColor.yellow)
-        cubeColorArray.append(UIColor.purple)
-        cubeColorArray.append(UIColor.gray)
+        
+        questionBoxView.frame = CGRect(x: 0, y: self.view.frame.height/3 , width: self.view.frame.width, height: self.view.frame.height/3)
+        questionBoxView.backgroundColor = UIColor.white
+        
+        self.view.addSubview(questionBoxView)
+        
+        let qScene = SCNScene()
+        
+        // create and add a camera to the scene
+        let qCameraNode = SCNNode()
+        qCameraNode.camera = SCNCamera()
+        qScene.rootNode.addChildNode(qCameraNode)
+        
+        qScene.rootNode.addChildNode(box1Node)
+        // place the camera
+        qCameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
+        
+        questionBoxView.scene = qScene
+        
+        // allows the user to manipulate the camera
+        //squestionBoxView.allowsCameraControl = true
+        
+        // show statistics such as fps and timing information
+        questionBoxView.showsStatistics = true
+        
+        // configure the view
+        questionBoxView.backgroundColor = UIColor.black
+        
+        questionBoxView.autoenablesDefaultLighting = true
+        
+    
         
         
         
 
         
-        let diceView = DiceView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height/3))
-        self.view.addSubview(diceView)
-        diceView.build2DCube(colorArray: cubeColorArray)
-        
-        mainBoxView.frame = CGRect(x: 0, y: self.view.frame.height/3, width: self.view.frame.width, height: self.view.frame.height/3)
+     
     }
     
 

@@ -27,7 +27,7 @@ class DiceView: UIView {
         
         let screenWidth = frame.width
         let diceViewWidth = screenWidth * (1 - (CGFloat)(Constants.DICE_VIEW_MARGIN_RATIO * 2))
-        let diceSize = (Int) (diceViewWidth/4)
+        let diceSize = (Int) (diceViewWidth/5)
         let margin = (Int) (screenWidth * (CGFloat)(Constants.DICE_VIEW_MARGIN_RATIO))
         
         self.leftImageView = UIImageView(frame: CGRect(x: margin, y: margin + diceSize, width: diceSize, height: diceSize))
@@ -55,12 +55,36 @@ class DiceView: UIView {
         self.addSubview(self.backImageView)
         self.addSubview(self.rightImageView)
         self.addSubview(self.leftImageView)
+        
+        
+        let yesButton:UIButton = UIButton(frame: CGRect(x: Int(self.frame.width/2), y: margin, width: 80, height: 50))
+        yesButton.backgroundColor = UIColor.white
+        yesButton.setTitle("Yes", for: .normal)
+        yesButton.setTitleColor(UIColor.green, for:  .normal)
+        yesButton.addTarget(self, action:#selector(self.yesButtonClicked), for: .touchUpInside)
+        self.addSubview(yesButton)
+        
+        
+        let noButton:UIButton = UIButton(frame: CGRect(x: (Int)(self.frame.width/2) + margin + 80, y: margin, width: 80, height: 50))
+        noButton.backgroundColor = UIColor.white
+        noButton.setTitle("No", for: .normal)
+        noButton.setTitleColor(UIColor.green, for:  .normal)
+        noButton.addTarget(self, action:#selector(self.noButtonClicked), for: .touchUpInside)
+        self.addSubview(noButton)
 
         
 
 
     
       
+    }
+    
+    func yesButtonClicked() {
+        print("yes Button Clicked")
+    }
+    
+    func noButtonClicked() {
+        print("no Button Clicked")
     }
     
     convenience init() {
