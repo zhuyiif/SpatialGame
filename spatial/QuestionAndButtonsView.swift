@@ -81,7 +81,7 @@ class QuestionAndButtonsView: UIView {
         tryNext.setTitle("Next", for: .normal)
         tryNext.setTitleColor(UIColor.red, for:  .normal)
         tryNext.make3D()
-        self.addSubview(tryNext)
+       // self.addSubview(tryNext)
 
         
         

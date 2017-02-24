@@ -154,7 +154,7 @@ class GameViewController: UIViewController {
         
         self.view.addSubview(questionButtonsView)
         
-        questionButtonsView.backgroundColor = UIColor.orange
+        questionButtonsView.backgroundColor = UIColor.flatOrange
         questionButtonsView.yesButton.addTarget(self, action:#selector(self.yesButtonClicked), for: .touchUpInside)
         questionButtonsView.noButton.addTarget(self, action:#selector(self.noButtonClicked), for: .touchUpInside)
         questionButtonsView.tipsButton.addTarget(self, action:#selector(self.tipsButtonClicked), for: .touchUpInside)
@@ -449,8 +449,23 @@ class GameViewController: UIViewController {
     
     func tipsButtonClicked() {
         print("tips Button Clicked")
-        animationBox();
-        mainBoxView.allowsCameraControl = true
+        
+        SCLAlertView().showTitle(
+            "Tips", // Title of view
+            subTitle: "You can use finger rotate the box.", // String of view
+            duration: 2.0, // Duration to show before closing automatically, default: 0.0
+            completeText: "Done", // Optional button value, default: ""
+            style: .success, // Styles - see below.
+            colorStyle: 0xA429FF,
+            colorTextButton: 0xFFFFFF
+            ).setDismissBlock {
+                
+                self.animationBox();
+                self.mainBoxView.allowsCameraControl = true
+                
+        }
+        
+     
     }
     func nextButtonClicked() {
         
