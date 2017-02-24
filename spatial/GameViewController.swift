@@ -35,7 +35,7 @@ class GameViewController: UIViewController {
     
     var diceRotateSidesDictionary = [RotationXYNum : VisiableSides]()
     
-  
+    
     func initDiceDicData() {
         
         diceRotateSidesDictionary[RotationXYNum(x: 1,y: 1)] = VisiableSides(side1: .left, side2: .top, side3: .front)
@@ -57,8 +57,8 @@ class GameViewController: UIViewController {
         diceRotateSidesDictionary[RotationXYNum(x: 3,y: 7)] = VisiableSides(side1: .top, side2: .left, side3: .back)
         diceRotateSidesDictionary[RotationXYNum(x: 5,y: 7)] = VisiableSides(side1: .bottom, side2: .left, side3: .back)
         diceRotateSidesDictionary[RotationXYNum(x: 7,y: 7)] = VisiableSides(side1: .bottom, side2: .front, side3: .right)
-
-
+        
+        
         
     }
     
@@ -88,7 +88,7 @@ class GameViewController: UIViewController {
         let boxGeometry = SCNBox(width: 5.0, height: 5.0, length: 5.0, chamferRadius: 0.2)
         boxNode = SCNNode(geometry: boxGeometry)
         scene.rootNode.addChildNode(boxNode)
-    
+        
         // place the camera
         cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
         
@@ -133,6 +133,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initDiceDicData()
         setupViews()
         
         buildQuestions()
@@ -182,7 +183,6 @@ class GameViewController: UIViewController {
             
         }
         
-        self.currentAnswer = true
         
         diceView.build2DCube(colorArray: cubeColorArray)
         buildBoxSides()
@@ -194,28 +194,85 @@ class GameViewController: UIViewController {
     func buildBoxSides() {
         var materialArray:[SCNMaterial] = []
         
-//        if !self.currentAnswer {
-//            
-//            for (index,element) in cubeColorArray.enumerated() {
-//                let materialItem = SCNMaterial()
-//                
-//                if(index == 0) {
-//                    materialItem.diffuse.contents  =  cubeColorArray[1]
-//                }
-//                else if(index == 1) {
-//                    materialItem.diffuse.contents  =  cubeColorArray[0]
-//                }
-//                else {
-//                    materialItem.diffuse.contents = element
-//                }
-//                materialItem.locksAmbientWithDiffuse = true;
-//                materialArray.append(materialItem)
-//                
-//            }
-//        }
-//        else
+        //        if !self.currentAnswer {
+        //
+        //            for (index,element) in cubeColorArray.enumerated() {
+        //                let materialItem = SCNMaterial()
+        //
+        //                if(index == 0) {
+        //                    materialItem.diffuse.contents  =  cubeColorArray[1]
+        //                }
+        //                else if(index == 1) {
+        //                    materialItem.diffuse.contents  =  cubeColorArray[0]
+        //                }
+        //                else {
+        //                    materialItem.diffuse.contents = element
+        //                }
+        //                materialItem.locksAmbientWithDiffuse = true;
+        //                materialArray.append(materialItem)
+        //
+        //            }
+        //        }
+        //        else
         
-    //    {
+        //    {
+    
+     
+        
+        
+        var rotateXNumber = arc4random_uniform(4)
+        var rotateYNumber = arc4random_uniform(4)
+        
+        switch rotateXNumber {
+        case 0:
+            rotateXNumber = 1
+        case 1:
+            rotateXNumber = 3
+        case 2:
+            rotateXNumber = 5
+        case 3:
+            rotateXNumber = 7
+        default:
+            print("error")
+        }
+        
+        switch rotateYNumber {
+        case 0:
+            rotateYNumber = 1
+        case 1:
+            rotateYNumber = 3
+        case 2:
+            rotateYNumber = 5
+        case 3:
+            rotateYNumber = 7
+        default:
+            print("error")
+        }
+        
+        let roYAngle = (Float)(M_PI)/4 * (Float)(rotateYNumber)
+        let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
+        
+        let roXAngle = (Float)(M_PI)/4 * (Float)(rotateXNumber)
+        let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
+        
+        let finalMat = SCNMatrix4Mult(roYMat, roXMat)
+        
+        
+        print("X: " + rotateXNumber.description + " Y:" + rotateYNumber.description)
+        
+        boxNode.transform = finalMat
+        
+        
+    
+        
+        //   }
+        
+       
+        
+        
+        
+        if currentAnswer {
+            print("correct")
             for (_,element) in cubeColorArray.enumerated() {
                 let materialItem = SCNMaterial()
                 
@@ -226,75 +283,45 @@ class GameViewController: UIViewController {
                 materialArray.append(materialItem)
             }
             
-     //   }
-        
-        boxNode.geometry?.materials = materialArray
-        
-        
-        if self.currentAnswer {
-            
-            
-            print("correct ")
-            
-            
-            
-            var rotateXNumber = arc4random_uniform(4)
-            var rotateYNumber = arc4random_uniform(4)
-            
-            switch rotateXNumber {
-            case 0:
-                rotateXNumber = 1
-            case 1:
-                rotateXNumber = 3
-            case 2:
-                rotateXNumber = 5
-            case 3:
-                rotateXNumber = 7
-            default:
-                print("error")
-            }
-            
-            switch rotateYNumber {
-            case 0:
-                rotateYNumber = 1
-            case 1:
-                rotateYNumber = 3
-            case 2:
-                rotateYNumber = 5
-            case 3:
-                rotateYNumber = 7
-            default:
-                print("error")
-            }
-            
-            let roYAngle = (Float)(M_PI)/4 * (Float)(rotateYNumber)
-            let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
-            
-            let roXAngle = (Float)(M_PI)/4 * (Float)(rotateXNumber)
-            let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
-            
-            let finalMat = SCNMatrix4Mult(roYMat, roXMat)
-            
-    
-            print("X: " + rotateXNumber.description + " Y:" + rotateYNumber.description)
-            
-            boxNode.transform = finalMat
         }
         else {
+            print("wrong")
+            //need switch visiable sides
             
-            print("wrong  ")
+            let ratationData: RotationXYNum = RotationXYNum(x:Int( rotateXNumber), y: Int(rotateYNumber))
             
-            let roYAngle = (Float)(M_PI)/4
-            let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
+            let visiableData = diceRotateSidesDictionary[ratationData]
             
-            let roXAngle = (Float)(M_PI)/4
-            let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
+         
+            for (index,element) in cubeColorArray.enumerated() {
+                let materialItem = SCNMaterial()
+                
+                if index == visiableData?.side1.rawValue {
+                    materialItem.diffuse.contents = cubeColorArray[(visiableData?.side2.rawValue)!]
+                }
+                else if index == visiableData?.side2.rawValue {
+                    materialItem.diffuse.contents = cubeColorArray[(visiableData?.side1.rawValue)!]
+                }
+                else {
+                    materialItem.diffuse.contents = element
+                    
+                }
+                
+                
+               
+                
+                materialItem.locksAmbientWithDiffuse = true;
+                materialArray.append(materialItem)
+            }
             
-            let finalMat = SCNMatrix4Mult(roYMat, roXMat)
             
-            boxNode.transform = finalMat
             
         }
+        
+        
+         boxNode.geometry?.materials = materialArray
+        
+        
         
         mainBoxView.pointOfView = cameraNode
         
@@ -321,7 +348,7 @@ class GameViewController: UIViewController {
     
     func yesButtonClicked() {
         
-       
+        
         showAlert(isRight: self.currentAnswer)
         
         

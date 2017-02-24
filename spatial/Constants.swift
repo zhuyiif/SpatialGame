@@ -37,6 +37,8 @@ struct VisiableSides {
     var side1:DiceDirection
     var side2:DiceDirection
     var side3:DiceDirection
+    
+  
 }
 
 
