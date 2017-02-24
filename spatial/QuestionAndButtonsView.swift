@@ -10,15 +10,15 @@ import Foundation
 
 import UIKit
 
-
+import Material
 
 
 class QuestionAndButtonsView: UIView {
     
-    var yesButton:UIButton = UIButton()
-    var noButton:UIButton = UIButton()
-    var tipsButton:UIButton = UIButton()
-    var tryNext:UIButton = UIButton()
+    var yesButton:UIButton = RaisedButton()
+    var noButton:UIButton = RaisedButton()
+    var tipsButton:UIButton = RaisedButton()
+    var tryNext:UIButton = RaisedButton()
     
  
     override init(frame: CGRect) {
@@ -49,12 +49,13 @@ class QuestionAndButtonsView: UIView {
         
         let buttonH = (Int) (Double(buttonW) * 0.5)
         
+       
         
-        
-        yesButton = UIButton(frame: CGRect(x: marginXButton, y: buttonTop , width: buttonW, height: buttonH))
+        yesButton = RaisedButton(frame: CGRect(x: marginXButton, y: buttonTop , width: buttonW, height: buttonH))
         yesButton.backgroundColor = UIColor.white
         yesButton.setTitle("Yes", for: .normal)
         yesButton.setTitleColor(UIColor.green, for:  .normal)
+        yesButton.make3D()
 
         self.addSubview(yesButton)
         
@@ -63,6 +64,7 @@ class QuestionAndButtonsView: UIView {
         noButton.backgroundColor = UIColor.white
         noButton.setTitle("No", for: .normal)
         noButton.setTitleColor(UIColor.red, for:  .normal)
+        noButton.make3D()
         self.addSubview(noButton)
         
         
@@ -70,6 +72,7 @@ class QuestionAndButtonsView: UIView {
         tipsButton.backgroundColor = UIColor.white
         tipsButton.setTitle("Tips", for: .normal)
         tipsButton.setTitleColor(UIColor.red, for:  .normal)
+        tipsButton.make3D()
         self.addSubview(tipsButton)
         
         
@@ -77,6 +80,7 @@ class QuestionAndButtonsView: UIView {
         tryNext.backgroundColor = UIColor.white
         tryNext.setTitle("Next", for: .normal)
         tryNext.setTitleColor(UIColor.red, for:  .normal)
+        tryNext.make3D()
         self.addSubview(tryNext)
 
         

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension Array {
     var shuffle:[Element] {
@@ -20,5 +21,24 @@ extension Array {
         return elements
     }
     
+    
+}
+
+extension UIButton {
+    
+    func make3D(){
+        self.layer.cornerRadius = 3.0;
+        
+        self.layer.borderWidth = 2.0;
+        self.layer.borderColor = UIColor.clear.cgColor
+        
+        self.layer.shadowColor = UIColor(colorLiteralRed: 100.0 / 255.0, green: 0, blue: 0, alpha: 1).cgColor
+            
+        
+        self.layer.shadowOpacity = 1.0;
+        self.layer.shadowRadius = 1.0;
+        
+        self.layer.shadowOffset = CGSize(width: 0, height: 3);
+    }
     
 }

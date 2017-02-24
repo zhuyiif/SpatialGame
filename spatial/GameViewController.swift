@@ -10,6 +10,33 @@ import UIKit
 import QuartzCore
 import SceneKit
 import SpriteKit
+import ChameleonFramework
+import Material
+import SCLAlertView
+
+struct ButtonLayout {
+    struct Flat {
+        static let width: CGFloat = 120
+        static let height: CGFloat = 44
+        static let offsetY: CGFloat = -150
+    }
+    
+    struct Raised {
+        static let width: CGFloat = 150
+        static let height: CGFloat = 44
+        static let offsetY: CGFloat = -75
+    }
+    
+    struct Fab {
+        static let diameter: CGFloat = 48
+    }
+    
+    struct Icon {
+        static let width: CGFloat = 120
+        static let height: CGFloat = 48
+        static let offsetY: CGFloat = 75
+    }
+}
 
 
 
@@ -34,6 +61,13 @@ class GameViewController: UIViewController {
     var cameraNode = SCNNode()
     
     var diceRotateSidesDictionary = [RotationXYNum : VisiableSides]()
+    
+    
+    fileprivate func prepareRaisedButton() {
+      
+        
+        
+    }
     
     
     func initDiceDicData() {
@@ -72,7 +106,7 @@ class GameViewController: UIViewController {
         
         diceView = DiceView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height/3))
         self.view.addSubview(diceView)
-        diceView.backgroundColor = UIColor.black
+        diceView.backgroundColor = UIColor.flatBlack
         
     }
     
@@ -109,7 +143,7 @@ class GameViewController: UIViewController {
         
         
         // configure the view
-        scnView.backgroundColor = UIColor.black
+        scnView.backgroundColor = UIColor.flatBlack
         
         scnView.autoenablesDefaultLighting = true
         
@@ -155,17 +189,17 @@ class GameViewController: UIViewController {
         for item in colorArray {
             switch item {
             case 0:
-                cubeColorArray.append(UIColor.green)
+                cubeColorArray.append(UIColor.flatGreen)
             case 1:
-                cubeColorArray.append(UIColor.red)
+                cubeColorArray.append(UIColor.flatRed)
             case 2:
-                cubeColorArray.append(UIColor.blue)
+                cubeColorArray.append(UIColor.flatBlue)
             case 3:
-                cubeColorArray.append(UIColor.yellow)
+                cubeColorArray.append(UIColor.flatYellow)
             case 4:
-                cubeColorArray.append(UIColor.purple)
+                cubeColorArray.append(UIColor.flatPurple)
             case 5:
-                cubeColorArray.append(UIColor.gray)
+                cubeColorArray.append(UIColor.flatGray)
             default:
                 print("error")
             }
@@ -365,26 +399,36 @@ class GameViewController: UIViewController {
     
     func showAlert(isRight:Bool) {
         
-        
         if (isRight) {
-            let alertController = UIAlertController(title: "Congrat", message:
-                "You are Awesome", preferredStyle: UIAlertControllerStyle.alert)
+         
+            
+            SCLAlertView().showTitle(
+                "Congratulations", // Title of view
+                subTitle: "You are Awesome.", // String of view
+                duration: 2.0, // Duration to show before closing automatically, default: 0.0
+                completeText: "Done", // Optional button value, default: ""
+                style: .success, // Styles - see below.
+                colorStyle: 0xA429FF,
+                colorTextButton: 0xFFFFFF
+                ).setDismissBlock {
+                    self.nextButtonClicked()
+            }
             
             
-           
-            
-            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: { (alertAction) -> Void in
-                self.nextButtonClicked()
-            }))
-            
-            self.present(alertController, animated: true, completion: nil)
         }
         else {
-            let alertController = UIAlertController(title: "Sorry", message:
-                "Try next", preferredStyle: UIAlertControllerStyle.alert)
-            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
             
-            self.present(alertController, animated: true, completion: nil)
+            SCLAlertView().showTitle(
+                "Sorry", // Title of view
+                subTitle: "You are wrong.", // String of view
+                duration: 2.0, // Duration to show before closing automatically, default: 0.0
+                completeText: "Done", // Optional button value, default: ""
+                style: .error, // Styles - see below.
+                colorStyle: UInt(UIColor.flatRed.hexValue(), radix: 16),
+                colorTextButton: UInt(UIColor.flatRed.hexValue(), radix: 16)
+            )
+            
+
         }
     }
     
