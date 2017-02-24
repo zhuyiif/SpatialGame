@@ -107,8 +107,6 @@ class GameViewController: UIViewController {
         // allows the user to manipulate the camera
         //scnView.allowsCameraControl = true
         
-        // show statistics such as fps and timing information
-        scnView.showsStatistics = true
         
         // configure the view
         scnView.backgroundColor = UIColor.black

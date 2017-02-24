@@ -25,7 +25,17 @@ class DiceView: UIView {
         
         let screenWidth = frame.width
         let diceViewWidth = screenWidth * (1 - (CGFloat)(Constants.DICE_VIEW_MARGIN_RATIO * 2))
-        let diceSize = (Int) (diceViewWidth/5)
+        
+        var diceSize = 0;
+        if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad {
+            diceSize = (Int) (diceViewWidth/6)
+            
+        }
+        else
+        {
+            diceSize = (Int) (diceViewWidth/5)
+        }
+    
         let margin = (Int) (screenWidth * (CGFloat)(Constants.DICE_VIEW_MARGIN_RATIO))
         
         self.leftImageView = UIImageView(frame: CGRect(x: margin, y: margin + diceSize, width: diceSize, height: diceSize))

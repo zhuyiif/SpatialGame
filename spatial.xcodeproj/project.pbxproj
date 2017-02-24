@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D9B0DF024EB4C5744A65127 /* Pods_spatial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5AEF29F84D220E0012E65E0 /* Pods_spatial.framework */; };
 		BF041AEC1E5F8E58006859C9 /* QuestionAndButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF041AEB1E5F8E58006859C9 /* QuestionAndButtonsView.swift */; };
 		BF041AEE1E5F8F33006859C9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF041AED1E5F8F33006859C9 /* Constants.swift */; };
 		BF041AF01E5F949C006859C9 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF041AEF1E5F949C006859C9 /* Extentions.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B1A4DB7239AE68BF322C169D /* Pods-spatial.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spatial.debug.xcconfig"; path = "Pods/Target Support Files/Pods-spatial/Pods-spatial.debug.xcconfig"; sourceTree = "<group>"; };
 		BF041AEB1E5F8E58006859C9 /* QuestionAndButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionAndButtonsView.swift; sourceTree = "<group>"; };
 		BF041AED1E5F8F33006859C9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BF041AEF1E5F949C006859C9 /* Extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
@@ -80,6 +82,8 @@
 		BFA119421E5E1C2000D03CF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BFA119441E5E1C2000D03CF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFA1194A1E5E3FAA00D03CF2 /* DiceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceView.swift; sourceTree = "<group>"; };
+		C5AEF29F84D220E0012E65E0 /* Pods_spatial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spatial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB4878770A56683CAF79E6E9 /* Pods-spatial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spatial.release.xcconfig"; path = "Pods/Target Support Files/Pods-spatial/Pods-spatial.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,12 +91,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D9B0DF024EB4C5744A65127 /* Pods_spatial.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5DA1D4ADDAB0C0449676E949 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C5AEF29F84D220E0012E65E0 /* Pods_spatial.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B9E9B1B281FBBABC0752E2CF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B1A4DB7239AE68BF322C169D /* Pods-spatial.debug.xcconfig */,
+				EB4878770A56683CAF79E6E9 /* Pods-spatial.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		BF5483BE1E600367001348C9 /* AppIcon.appiconset */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +151,8 @@
 			children = (
 				BFA119351E5E1C2000D03CF2 /* spatial */,
 				BFA119341E5E1C2000D03CF2 /* Products */,
+				B9E9B1B281FBBABC0752E2CF /* Pods */,
+				5DA1D4ADDAB0C0449676E949 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -166,9 +190,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFA119471E5E1C2000D03CF2 /* Build configuration list for PBXNativeTarget "spatial" */;
 			buildPhases = (
+				BE5205E594EBD779C1FACA91 /* [CP] Check Pods Manifest.lock */,
 				BFA1192F1E5E1C2000D03CF2 /* Sources */,
 				BFA119301E5E1C2000D03CF2 /* Frameworks */,
 				BFA119311E5E1C2000D03CF2 /* Resources */,
+				595C9792A216C2EA513D00B0 /* [CP] Embed Pods Frameworks */,
+				D27D51E04AFD7943FE74A9EC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -191,7 +218,7 @@
 				TargetAttributes = {
 					BFA119321E5E1C2000D03CF2 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = WR26PA64R6;
+						DevelopmentTeam = HZ32KGWJ68;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -251,6 +278,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		595C9792A216C2EA513D00B0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-spatial/Pods-spatial-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BE5205E594EBD779C1FACA91 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D27D51E04AFD7943FE74A9EC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-spatial/Pods-spatial-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BFA1192F1E5E1C2000D03CF2 /* Sources */ = {
@@ -383,29 +458,36 @@
 		};
 		BFA119481E5E1C2000D03CF2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B1A4DB7239AE68BF322C169D /* Pods-spatial.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = WR26PA64R6;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = HZ32KGWJ68;
 				INFOPLIST_FILE = spatial/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zackzhu.spatial;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackzhu.spatial3D;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		BFA119491E5E1C2000D03CF2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB4878770A56683CAF79E6E9 /* Pods-spatial.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = WR26PA64R6;
+				DEVELOPMENT_TEAM = HZ32KGWJ68;
 				INFOPLIST_FILE = spatial/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zackzhu.spatial;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackzhu.spatial3D;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
