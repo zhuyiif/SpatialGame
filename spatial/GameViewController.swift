@@ -33,6 +33,35 @@ class GameViewController: UIViewController {
     
     var cameraNode = SCNNode()
     
+    var diceRotateSidesDictionary = [RotationXYNum : VisiableSides]()
+    
+  
+    func initDiceDicData() {
+        
+        diceRotateSidesDictionary[RotationXYNum(x: 1,y: 1)] = VisiableSides(side1: .left, side2: .top, side3: .front)
+        diceRotateSidesDictionary[RotationXYNum(x: 3,y: 1)] = VisiableSides(side1: .top, side2: .back, side3: .right)
+        diceRotateSidesDictionary[RotationXYNum(x: 5,y: 1)] = VisiableSides(side1: .bottom, side2: .back, side3: .right)
+        diceRotateSidesDictionary[RotationXYNum(x: 7,y: 1)] = VisiableSides(side1: .left, side2: .bottom, side3: .front)
+        
+        diceRotateSidesDictionary[RotationXYNum(x: 1,y: 3)] = VisiableSides(side1: .top, side2: .back, side3: .left)
+        diceRotateSidesDictionary[RotationXYNum(x: 3,y: 3)] = VisiableSides(side1: .top, side2: .right, side3: .front)
+        diceRotateSidesDictionary[RotationXYNum(x: 5,y: 3)] = VisiableSides(side1: .bottom, side2: .right, side3: .front)
+        diceRotateSidesDictionary[RotationXYNum(x: 7,y: 3)] = VisiableSides(side1: .bottom, side2: .back, side3: .left)
+        
+        diceRotateSidesDictionary[RotationXYNum(x: 1,y: 5)] = VisiableSides(side1: .top, side2: .right, side3: .back)
+        diceRotateSidesDictionary[RotationXYNum(x: 3,y: 5)] = VisiableSides(side1: .top, side2: .front, side3: .left)
+        diceRotateSidesDictionary[RotationXYNum(x: 5,y: 5)] = VisiableSides(side1: .bottom, side2: .front, side3: .left)
+        diceRotateSidesDictionary[RotationXYNum(x: 7,y: 5)] = VisiableSides(side1: .bottom, side2: .right, side3: .back)
+        
+        diceRotateSidesDictionary[RotationXYNum(x: 1,y: 7)] = VisiableSides(side1: .top, side2: .front, side3: .right)
+        diceRotateSidesDictionary[RotationXYNum(x: 3,y: 7)] = VisiableSides(side1: .top, side2: .left, side3: .back)
+        diceRotateSidesDictionary[RotationXYNum(x: 5,y: 7)] = VisiableSides(side1: .bottom, side2: .left, side3: .back)
+        diceRotateSidesDictionary[RotationXYNum(x: 7,y: 7)] = VisiableSides(side1: .bottom, side2: .front, side3: .right)
+
+
+        
+    }
+    
     func setupViews() {
         setupDiceView()
         setupMainBoxView()
@@ -153,6 +182,8 @@ class GameViewController: UIViewController {
             
         }
         
+        self.currentAnswer = true
+        
         diceView.build2DCube(colorArray: cubeColorArray)
         buildBoxSides()
         
@@ -163,26 +194,28 @@ class GameViewController: UIViewController {
     func buildBoxSides() {
         var materialArray:[SCNMaterial] = []
         
-        if !self.currentAnswer {
-            
-            for (index,element) in cubeColorArray.enumerated() {
-                let materialItem = SCNMaterial()
-                
-                if(index == 0) {
-                    materialItem.diffuse.contents  =  cubeColorArray[1]
-                }
-                else if(index == 1) {
-                    materialItem.diffuse.contents  =  cubeColorArray[0]
-                }
-                else {
-                    materialItem.diffuse.contents = element
-                }
-                materialItem.locksAmbientWithDiffuse = true;
-                materialArray.append(materialItem)
-                
-            }
-        }
-        else {
+//        if !self.currentAnswer {
+//            
+//            for (index,element) in cubeColorArray.enumerated() {
+//                let materialItem = SCNMaterial()
+//                
+//                if(index == 0) {
+//                    materialItem.diffuse.contents  =  cubeColorArray[1]
+//                }
+//                else if(index == 1) {
+//                    materialItem.diffuse.contents  =  cubeColorArray[0]
+//                }
+//                else {
+//                    materialItem.diffuse.contents = element
+//                }
+//                materialItem.locksAmbientWithDiffuse = true;
+//                materialArray.append(materialItem)
+//                
+//            }
+//        }
+//        else
+        
+    //    {
             for (_,element) in cubeColorArray.enumerated() {
                 let materialItem = SCNMaterial()
                 
@@ -193,7 +226,7 @@ class GameViewController: UIViewController {
                 materialArray.append(materialItem)
             }
             
-        }
+     //   }
         
         boxNode.geometry?.materials = materialArray
         
@@ -205,8 +238,8 @@ class GameViewController: UIViewController {
             
             
             
-            var rotateXNumber = arc4random_uniform(3)
-            var rotateYNumber = arc4random_uniform(3)
+            var rotateXNumber = arc4random_uniform(4)
+            var rotateYNumber = arc4random_uniform(4)
             
             switch rotateXNumber {
             case 0:
@@ -215,6 +248,8 @@ class GameViewController: UIViewController {
                 rotateXNumber = 3
             case 2:
                 rotateXNumber = 5
+            case 3:
+                rotateXNumber = 7
             default:
                 print("error")
             }
@@ -226,6 +261,8 @@ class GameViewController: UIViewController {
                 rotateYNumber = 3
             case 2:
                 rotateYNumber = 5
+            case 3:
+                rotateYNumber = 7
             default:
                 print("error")
             }
@@ -237,6 +274,9 @@ class GameViewController: UIViewController {
             let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
             
             let finalMat = SCNMatrix4Mult(roYMat, roXMat)
+            
+    
+            print("X: " + rotateXNumber.description + " Y:" + rotateYNumber.description)
             
             boxNode.transform = finalMat
         }

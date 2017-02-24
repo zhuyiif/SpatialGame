@@ -67,17 +67,17 @@ class DiceView: UIView {
     func build2DCube(colorArray: [UIColor]) {
         for (index, element) in colorArray.enumerated() {
             switch index {
-            case 0:
+            case DiceDirection.front.rawValue:
                 self.frontImageView.backgroundColor = element
-            case 1:
+            case DiceDirection.right.rawValue:
                 self.rightImageView.backgroundColor = element
-            case 2:
+            case DiceDirection.back.rawValue:
                 self.backImageView.backgroundColor = element
-            case 3:
+            case DiceDirection.left.rawValue:
                 self.leftImageView.backgroundColor = element
-            case 4:
+            case DiceDirection.top.rawValue:
                 self.topImageView.backgroundColor = element
-            case 5:
+            case DiceDirection.bottom.rawValue:
                 self.bottomImageView.backgroundColor = element
             default:
                 print("error")
