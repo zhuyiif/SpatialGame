@@ -122,7 +122,7 @@ class GameViewController: UIViewController {
         // configure the view
         scnView.backgroundColor = UIColor.flatBlack
         
-        scnView.autoenablesDefaultLighting = true
+        scnView.autoenablesDefaultLighting = false
         
     }
     
