@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  spatial
+
+  Created by yi zhu on 2/26/17.
+  Copyright © 2017 zackzhu. All rights reserved.
+*/
+"yes" = "Yes";
+"no" = "No";
+"tips" = "Tips";
+"questions" = "Dose the middle cube can be made based on the unfolded cube?";

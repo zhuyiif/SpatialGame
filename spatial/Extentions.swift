@@ -9,6 +9,12 @@
 import Foundation
 import UIKit
 
+extension String {
+    func localized(withComment:String) -> String {
+        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: withComment)
+    }
+}
+
 extension Array {
     var shuffle:[Element] {
         var elements = self

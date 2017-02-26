@@ -18,7 +18,7 @@ class QuestionAndButtonsView: UIView {
     var yesButton:UIButton = RaisedButton()
     var noButton:UIButton = RaisedButton()
     var tipsButton:UIButton = RaisedButton()
-    var tryNext:UIButton = RaisedButton()
+   
     
  
     override init(frame: CGRect) {
@@ -29,7 +29,7 @@ class QuestionAndButtonsView: UIView {
         
         let questionsLabel: UILabel = UILabel()
         questionsLabel.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: CGFloat(buttonTop))
-        questionsLabel.text = "Dose the middle cube can be made based on the unfolded cube?"
+        questionsLabel.text = "questions".localized(withComment: "")
         questionsLabel.lineBreakMode = .byWordWrapping // or NSLineBreakMode.ByWordWrapping
         questionsLabel.numberOfLines = 0
         questionsLabel.textAlignment = NSTextAlignment.center
@@ -57,7 +57,7 @@ class QuestionAndButtonsView: UIView {
         
         yesButton = RaisedButton(frame: CGRect(x: marginXButton, y: buttonTop , width: buttonW, height: buttonH))
         yesButton.backgroundColor = UIColor.flatWhite
-        yesButton.setTitle("Yes", for: .normal)
+        yesButton.setTitle("yes".localized(withComment: ""), for: .normal)
         yesButton.setTitleColor(UIColor.flatGreen, for:  .normal)
         yesButton.make3D()
 
@@ -66,7 +66,7 @@ class QuestionAndButtonsView: UIView {
         
         noButton = UIButton(frame: CGRect(x: marginXButton * 2 + buttonW, y: buttonTop , width: buttonW, height: buttonH))
         noButton.backgroundColor = UIColor.flatWhite
-        noButton.setTitle("No", for: .normal)
+        noButton.setTitle("no".localized(withComment: ""), for: .normal)
         noButton.setTitleColor(UIColor.red, for:  .normal)
         noButton.make3D()
         self.addSubview(noButton)
@@ -74,19 +74,12 @@ class QuestionAndButtonsView: UIView {
         
         tipsButton = UIButton(frame: CGRect(x: marginXButton * 3 + 2 * buttonW, y: buttonTop , width: buttonW, height: buttonH))
         tipsButton.backgroundColor = UIColor.flatWhite
-        tipsButton.setTitle("Tips", for: .normal)
+        tipsButton.setTitle("tips".localized(withComment: ""), for: .normal)
         tipsButton.setTitleColor(UIColor.flatPurple, for:  .normal)
         tipsButton.make3D()
         self.addSubview(tipsButton)
         
         
-        tryNext = UIButton(frame: CGRect(x: marginXButton, y: marginXButton * 2 + buttonTop , width: buttonW, height: buttonH))
-        tryNext.backgroundColor = UIColor.white
-        tryNext.setTitle("Next", for: .normal)
-        tryNext.setTitleColor(UIColor.red, for:  .normal)
-        tryNext.make3D()
-       // self.addSubview(tryNext)
-
         
         
     }

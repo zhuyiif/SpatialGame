@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  spatial
+
+  Created by yi zhu on 2/26/17.
+  Copyright © 2017 zackzhu. All rights reserved.
+*/
+
+"yes" = "可以";
+"no" = "不可以";
+"tips" = "提示";
+"questions" = "中间这个立方体可以被上面的平面图折出来吗?";

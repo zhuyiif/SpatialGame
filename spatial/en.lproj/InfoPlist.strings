@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  spatial
+
+  Created by yi zhu on 2/26/17.
+  Copyright © 2017 zackzhu. All rights reserved.
+*/
+CFBundleDisplayName = "Spatial";

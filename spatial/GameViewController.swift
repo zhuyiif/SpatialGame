@@ -135,7 +135,6 @@ class GameViewController: UIViewController {
         questionButtonsView.yesButton.addTarget(self, action:#selector(self.yesButtonClicked), for: .touchUpInside)
         questionButtonsView.noButton.addTarget(self, action:#selector(self.noButtonClicked), for: .touchUpInside)
         questionButtonsView.tipsButton.addTarget(self, action:#selector(self.tipsButtonClicked), for: .touchUpInside)
-        questionButtonsView.tryNext.addTarget(self, action:#selector(self.nextButtonClicked), for: .touchUpInside)
         
     }
     
