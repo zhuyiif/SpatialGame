@@ -49,6 +49,6 @@ struct VisiableSides {
 
 
 struct Constants {
-    static let DICE_VIEW_MARGIN_RATIO = 0.1 // 10% margin
+    static let DICE_VIEW_MARGIN_RATIO = 0.05 // 10% margin
 }
 

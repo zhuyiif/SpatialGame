@@ -14,30 +14,6 @@ import ChameleonFramework
 import Material
 import SCLAlertView
 
-struct ButtonLayout {
-    struct Flat {
-        static let width: CGFloat = 120
-        static let height: CGFloat = 44
-        static let offsetY: CGFloat = -150
-    }
-    
-    struct Raised {
-        static let width: CGFloat = 150
-        static let height: CGFloat = 44
-        static let offsetY: CGFloat = -75
-    }
-    
-    struct Fab {
-        static let diameter: CGFloat = 48
-    }
-    
-    struct Icon {
-        static let width: CGFloat = 120
-        static let height: CGFloat = 48
-        static let offsetY: CGFloat = 75
-    }
-}
-
 
 
 class GameViewController: UIViewController {
@@ -100,11 +76,12 @@ class GameViewController: UIViewController {
         setupDiceView()
         setupMainBoxView()
         setupQuestionButtonsView()
+        self.view.backgroundColor = UIColor.flatBlack
     }
     
     func setupDiceView() {
         
-        diceView = DiceView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height/3))
+        diceView = DiceView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height*4/10.0))
         self.view.addSubview(diceView)
         diceView.backgroundColor = UIColor.flatBlack
         
@@ -127,7 +104,7 @@ class GameViewController: UIViewController {
         cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
         
         
-        mainBoxView.frame = CGRect(x: 0, y: self.view.frame.height/3 , width: self.view.frame.width, height: self.view.frame.height/3)
+        mainBoxView.frame = CGRect(x: 0, y: self.diceView.frame.height , width: self.view.frame.width, height: self.view.frame.height*4/10.0)
         mainBoxView.backgroundColor = UIColor.white
         
         self.view.addSubview(mainBoxView)
@@ -150,7 +127,7 @@ class GameViewController: UIViewController {
     }
     
     func setupQuestionButtonsView() {
-        questionButtonsView = QuestionAndButtonsView(frame: CGRect(x: 0, y: self.view.frame.height/3*2 , width: self.view.frame.width, height: self.view.frame.height/3))
+        questionButtonsView = QuestionAndButtonsView(frame: CGRect(x: 0, y: self.diceView.frame.height + self.mainBoxView.frame.height , width: self.view.frame.width, height: self.view.frame.height*3/10))
         
         self.view.addSubview(questionButtonsView)
         

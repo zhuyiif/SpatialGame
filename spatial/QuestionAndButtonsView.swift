@@ -25,7 +25,7 @@ class QuestionAndButtonsView: UIView {
         
         super.init(frame: frame)
         
-        let buttonTop = 80
+        let buttonTop = 60
         
         let questionsLabel: UILabel = UILabel()
         questionsLabel.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: CGFloat(buttonTop))
@@ -41,27 +41,31 @@ class QuestionAndButtonsView: UIView {
         
         
         let screenWidth = frame.width
+        
+        let buttonW = (Int) (screenWidth/4)
+        
         let viewWidth = screenWidth * (1 - (CGFloat)(Constants.DICE_VIEW_MARGIN_RATIO * 2))
         
-        let marginXButton = (Int) (screenWidth * (CGFloat)(Constants.DICE_VIEW_MARGIN_RATIO))
-        let buttonW = (Int) (viewWidth/4)
+        let marginXButton = Int((Int(screenWidth) - buttonW * 3)/4)
+        
+      
       
         
-        let buttonH = (Int) (Double(buttonW) * 0.5)
+        let buttonH = (Int) (Double(buttonW) * 0.4)
         
        
         
         yesButton = RaisedButton(frame: CGRect(x: marginXButton, y: buttonTop , width: buttonW, height: buttonH))
-        yesButton.backgroundColor = UIColor.white
+        yesButton.backgroundColor = UIColor.flatWhite
         yesButton.setTitle("Yes", for: .normal)
-        yesButton.setTitleColor(UIColor.green, for:  .normal)
+        yesButton.setTitleColor(UIColor.flatGreen, for:  .normal)
         yesButton.make3D()
 
         self.addSubview(yesButton)
         
         
         noButton = UIButton(frame: CGRect(x: marginXButton * 2 + buttonW, y: buttonTop , width: buttonW, height: buttonH))
-        noButton.backgroundColor = UIColor.white
+        noButton.backgroundColor = UIColor.flatWhite
         noButton.setTitle("No", for: .normal)
         noButton.setTitleColor(UIColor.red, for:  .normal)
         noButton.make3D()
@@ -69,9 +73,9 @@ class QuestionAndButtonsView: UIView {
         
         
         tipsButton = UIButton(frame: CGRect(x: marginXButton * 3 + 2 * buttonW, y: buttonTop , width: buttonW, height: buttonH))
-        tipsButton.backgroundColor = UIColor.white
+        tipsButton.backgroundColor = UIColor.flatWhite
         tipsButton.setTitle("Tips", for: .normal)
-        tipsButton.setTitleColor(UIColor.red, for:  .normal)
+        tipsButton.setTitleColor(UIColor.flatPurple, for:  .normal)
         tipsButton.make3D()
         self.addSubview(tipsButton)
         
