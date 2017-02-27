@@ -20,6 +20,7 @@ class MainController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = UIColor.flatYellow
         
         let snameImage:UIImage = UIImage(named: "art.scnassets/snake.jpg")!
@@ -86,7 +87,7 @@ class MainController: UIViewController {
         print("singleButtonClicked Button Clicked")
         let gameViewCtrl = GameViewController()
         
-//        self.navigationController!.pushViewController(gameViewCtrl, animated: true)
+        self.navigationController!.pushViewController(gameViewCtrl, animated: true)
 
     }
 }

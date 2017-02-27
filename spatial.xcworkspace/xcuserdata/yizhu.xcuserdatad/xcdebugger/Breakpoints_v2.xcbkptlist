@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "spatial/MainController.swift"
-            timestampString = "509852137.308324"
+            timestampString = "509852865.856121"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "singleButtonClicked()"
             landmarkType = "7">
          </BreakpointContent>

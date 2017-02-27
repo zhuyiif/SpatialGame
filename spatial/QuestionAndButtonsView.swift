@@ -7,23 +7,29 @@
 //
 
 import Foundation
-
 import UIKit
-
 import Material
-
+import SnapKit
 
 class QuestionAndButtonsView: UIView {
     
     var yesButton:UIButton = RaisedButton()
     var noButton:UIButton = RaisedButton()
     var tipsButton:UIButton = RaisedButton()
+    
+    var backButton:UIButton = RaisedButton()
    
     
  
     override init(frame: CGRect) {
         
         super.init(frame: frame)
+        
+        
+        
+        
+        self.addSubview(yesButton)
+        
         
         let buttonTop = 60
         

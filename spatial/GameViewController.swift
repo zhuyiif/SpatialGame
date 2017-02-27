@@ -38,6 +38,8 @@ class GameViewController: UIViewController {
     
     var diceRotateSidesDictionary = [RotationXYNum : VisiableSides]()
     
+    var backButton:UIButton = RaisedButton()
+    
     
     fileprivate func prepareRaisedButton() {
       
@@ -77,6 +79,26 @@ class GameViewController: UIViewController {
         setupMainBoxView()
         setupQuestionButtonsView()
         self.view.backgroundColor = UIColor.flatBlack
+        
+        self.view.addSubview(backButton)
+        backButton.backgroundColor = UIColor.flatWhite
+        backButton.setTitle("back".localized(withComment: ""), for: .normal)
+        backButton.setTitleColor(UIColor.flatGreen, for:  .normal)
+        backButton.make3D()
+        backButton.snp.makeConstraints { (make) in
+            
+            make.left.equalTo(self.view).offset(12)
+            make.top.equalTo(self.view).offset(12)
+            
+            make.height.equalTo(34)
+            make.width.equalTo(44)
+            
+            
+        }
+        
+        self.backButton.addTarget(self, action:#selector(self.backButtonClicked), for: .touchUpInside)
+        
+
     }
     
     func setupDiceView() {
@@ -447,6 +469,11 @@ class GameViewController: UIViewController {
         
         buildQuestions()
         mainBoxView.allowsCameraControl = false
+        
+    }
+    
+    func backButtonClicked() {
+        self.navigationController?.popViewController(animated: true)
         
     }
     
