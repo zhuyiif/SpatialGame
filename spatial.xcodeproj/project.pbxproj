@@ -44,6 +44,7 @@
 		BFA1194B1E5E3FAA00D03CF2 /* DiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA1194A1E5E3FAA00D03CF2 /* DiceView.swift */; };
 		BFF7356E1E63645A00DFE7D9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFF735701E63645A00DFE7D9 /* InfoPlist.strings */; };
 		BFF735741E6365D400DFE7D9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFF735761E6365D400DFE7D9 /* Localizable.strings */; };
+		BFF7357A1E639B4500DFE7D9 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF735791E639B4500DFE7D9 /* MainController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +92,7 @@
 		BFF735751E6365D400DFE7D9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BFF735771E6365DC00DFE7D9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BFF735781E6365DF00DFE7D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BFF735791E639B4500DFE7D9 /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		C5AEF29F84D220E0012E65E0 /* Pods_spatial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spatial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB4878770A56683CAF79E6E9 /* Pods-spatial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spatial.release.xcconfig"; path = "Pods/Target Support Files/Pods-spatial/Pods-spatial.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -190,6 +192,7 @@
 				BF041AEB1E5F8E58006859C9 /* QuestionAndButtonsView.swift */,
 				BF041AED1E5F8F33006859C9 /* Constants.swift */,
 				BF041AEF1E5F949C006859C9 /* Extentions.swift */,
+				BFF735791E639B4500DFE7D9 /* MainController.swift */,
 			);
 			path = spatial;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF041AEE1E5F8F33006859C9 /* Constants.swift in Sources */,
+				BFF7357A1E639B4500DFE7D9 /* MainController.swift in Sources */,
 				BF041AEC1E5F8E58006859C9 /* QuestionAndButtonsView.swift in Sources */,
 				BF041AF01E5F949C006859C9 /* Extentions.swift in Sources */,
 				BFA1193B1E5E1C2000D03CF2 /* GameViewController.swift in Sources */,

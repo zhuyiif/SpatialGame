@@ -9,3 +9,5 @@
 "no" = "No";
 "tips" = "Tips";
 "questions" = "Dose the middle cube can be made based on the unfolded cube?";
+"snake_menu" = "snake cube";
+"cube_menu"  = "foldable cube";

@@ -6,11 +6,13 @@ PODS:
     - Material/Core (= 2.4.19)
   - Material/Core (2.4.19)
   - SCLAlertView (0.7.0)
+  - SnapKit (3.2.0)
 
 DEPENDENCIES:
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
   - Material (~> 2.0)
   - SCLAlertView
+  - SnapKit (~> 3.2.0)
 
 EXTERNAL SOURCES:
   ChameleonFramework:
@@ -25,7 +27,8 @@ SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Material: 67b52869f68ab95757e14801ffba0a52a4f19c31
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: f7ccf849a226541c5a259f9abd8075b834e3a9d2
+PODFILE CHECKSUM: 7142894ced1339c9573d0b9f098dac23f0d8eb5b
 
 COCOAPODS: 1.2.0

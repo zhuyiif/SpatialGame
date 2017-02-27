@@ -64,7 +64,7 @@ class QuestionAndButtonsView: UIView {
         self.addSubview(yesButton)
         
         
-        noButton = UIButton(frame: CGRect(x: marginXButton * 2 + buttonW, y: buttonTop , width: buttonW, height: buttonH))
+        noButton = RaisedButton(frame: CGRect(x: marginXButton * 2 + buttonW, y: buttonTop , width: buttonW, height: buttonH))
         noButton.backgroundColor = UIColor.flatWhite
         noButton.setTitle("no".localized(withComment: ""), for: .normal)
         noButton.setTitleColor(UIColor.red, for:  .normal)
@@ -72,7 +72,7 @@ class QuestionAndButtonsView: UIView {
         self.addSubview(noButton)
         
         
-        tipsButton = UIButton(frame: CGRect(x: marginXButton * 3 + 2 * buttonW, y: buttonTop , width: buttonW, height: buttonH))
+        tipsButton = RaisedButton(frame: CGRect(x: marginXButton * 3 + 2 * buttonW, y: buttonTop , width: buttonW, height: buttonH))
         tipsButton.backgroundColor = UIColor.flatWhite
         tipsButton.setTitle("tips".localized(withComment: ""), for: .normal)
         tipsButton.setTitleColor(UIColor.flatPurple, for:  .normal)
