@@ -16,7 +16,7 @@ import SCLAlertView
 
 
 
-class GameViewController: UIViewController {
+class GameViewController: SpatialBaseController {
     
     var currentAnswer: Bool = false
     
@@ -37,15 +37,6 @@ class GameViewController: UIViewController {
     var cameraNode = SCNNode()
     
     var diceRotateSidesDictionary = [RotationXYNum : VisiableSides]()
-    
-    var backButton:UIButton = RaisedButton()
-    
-    
-    fileprivate func prepareRaisedButton() {
-      
-        
-        
-    }
     
     
     func initDiceDicData() {
@@ -74,7 +65,7 @@ class GameViewController: UIViewController {
         
     }
     
-    func setupViews() {
+    func setupSubViews() {
         setupDiceView()
         setupMainBoxView()
         setupQuestionButtonsView()
@@ -162,12 +153,9 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         initDiceDicData()
-        setupViews()
-        
+        setupSubViews()
         buildQuestions()
-        
     }
     
     func uniqueRandoms(numberOfRandoms: Int, minNum: Int, maxNum: UInt32) -> [Int] {
@@ -472,10 +460,6 @@ class GameViewController: UIViewController {
         
     }
     
-    func backButtonClicked() {
-        self.navigationController?.popViewController(animated: true)
-        
-    }
     
     func animationBox() {
         

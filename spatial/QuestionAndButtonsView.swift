@@ -44,18 +44,10 @@ class QuestionAndButtonsView: UIView {
        // questionsLabel.backgroundColor = UIColor.gray
         questionsLabel.textColor = UIColor.darkText
         
-        
-        
         let screenWidth = frame.width
         
         let buttonW = (Int) (screenWidth/4)
-        
-        let viewWidth = screenWidth * (1 - (CGFloat)(Constants.DICE_VIEW_MARGIN_RATIO * 2))
-        
         let marginXButton = Int((Int(screenWidth) - buttonW * 3)/4)
-        
-      
-      
         
         let buttonH = (Int) (Double(buttonW) * 0.4)
         

@@ -52,6 +52,8 @@ class MainController: UIViewController {
         snakeCubeButton.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         snakeCubeButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
+        snakeCubeButton.addTarget(self, action:#selector(self.snakeButtonClicked), for: .touchUpInside)
+        
         
         singleCubeButton = RaisedButton()
         singleCubeButton.backgroundColor = UIColor.white
@@ -89,5 +91,14 @@ class MainController: UIViewController {
         
         self.navigationController!.pushViewController(gameViewCtrl, animated: true)
 
+    }
+    
+    func snakeButtonClicked() {
+        
+        print("snake Button Clicked")
+        let gameViewCtrl = SnakeCubeController()
+        
+        self.navigationController!.pushViewController(gameViewCtrl, animated: true)
+        
     }
 }

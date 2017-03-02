@@ -38,17 +38,14 @@ struct VisiableSides {
     var side2:DiceDirection
     var side3:DiceDirection
     
-  
+    
 }
-
-
-
-
-
-
 
 
 struct Constants {
     static let DICE_VIEW_MARGIN_RATIO = 0.05 // 10% margin
+    static let MARGIN = 12
+    static  let BACK_BUTTON_W = 44
+    static let BACK_BUTTON_H = 34
 }
 
