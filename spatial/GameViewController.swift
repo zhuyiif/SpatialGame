@@ -117,6 +117,7 @@ class GameViewController: SpatialBaseController {
         cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
         
         
+        
         mainBoxView.frame = CGRect(x: 0, y: self.diceView.frame.height , width: self.view.frame.width, height: self.view.frame.height*4/10.0)
         mainBoxView.backgroundColor = UIColor.white
         

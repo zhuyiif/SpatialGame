@@ -184,7 +184,6 @@
 			children = (
 				BFA119361E5E1C2000D03CF2 /* AppDelegate.swift */,
 				BFA119381E5E1C2000D03CF2 /* art.scnassets */,
-				BFA1193A1E5E1C2000D03CF2 /* GameViewController.swift */,
 				BFA1193C1E5E1C2000D03CF2 /* Main.storyboard */,
 				BFA1193F1E5E1C2000D03CF2 /* Assets.xcassets */,
 				BF5483BE1E600367001348C9 /* AppIcon.appiconset */,
@@ -192,6 +191,7 @@
 				BFA119441E5E1C2000D03CF2 /* Info.plist */,
 				BFF735761E6365D400DFE7D9 /* Localizable.strings */,
 				BFF735701E63645A00DFE7D9 /* InfoPlist.strings */,
+				BFA1193A1E5E1C2000D03CF2 /* GameViewController.swift */,
 				BFA1194A1E5E3FAA00D03CF2 /* DiceView.swift */,
 				BF041AEB1E5F8E58006859C9 /* QuestionAndButtonsView.swift */,
 				BF041AED1E5F8F33006859C9 /* Constants.swift */,
