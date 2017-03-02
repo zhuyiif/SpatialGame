@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "spatial/SnakeCubeController.swift"
-            timestampString = "510189242.797221"
+            timestampString = "510191531.782007"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "buildMaterialArray()"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
+            landmarkName = "setupOriginalView()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

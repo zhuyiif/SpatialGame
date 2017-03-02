@@ -44,6 +44,16 @@ class SnakeCubeController: SpatialBaseController {
         
     }
     
+    func addArrayColorIndex(){
+        
+        colorArrayIndex += 1
+        
+        if colorArrayIndex > 5 {
+            colorArrayIndex = 0
+        }
+        
+    }
+    
     func buildMaterialArray() -> Array<SCNMaterial> {
         
         
@@ -68,12 +78,10 @@ class SnakeCubeController: SpatialBaseController {
             
         }
         
+        addArrayColorIndex()
         
-        colorArrayIndex += 1
         
-        if colorArrayIndex > 5 {
-            colorArrayIndex = 0
-        }
+    
        
         
 //        let materialItem1 = SCNMaterial()
@@ -160,6 +168,8 @@ class SnakeCubeController: SpatialBaseController {
         boxNode5.position = position5
         scene.rootNode.addChildNode(boxNode5)
         
+        
+        addArrayColorIndex()
         let position6 = SCNVector3(x: 0, y: stepM * 3, z: stepP)
         let boxGeometry6 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
         boxNode6 = SCNNode(geometry: boxGeometry6)
