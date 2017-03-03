@@ -81,41 +81,34 @@ class SnakeCubeController: SpatialBaseController {
         addArrayColorIndex()
         
         
-    
-       
-        
-//        let materialItem1 = SCNMaterial()
-//        materialItem1.diffuse.contents = UIColor.flatRed
-//        materialItem1.isDoubleSided = true
-//        
-//        let materialItem2 = SCNMaterial()
-//        materialItem2.diffuse.contents = UIColor.flatYellow
-//        materialItem2.isDoubleSided = true
-//        
-//        let materialItem3 = SCNMaterial()
-//        materialItem3.diffuse.contents = UIColor.flatBlue
-//        materialItem3.isDoubleSided = true
-//        
-//        let materialItem4 = SCNMaterial()
-//        materialItem4.diffuse.contents = UIColor.flatGreen
-//        materialItem4.isDoubleSided = true
-//        
-//        let materialItem5 = SCNMaterial()
-//        materialItem5.diffuse.contents = UIColor.flatGray
-//        materialItem5.isDoubleSided = true
-//        
-//        let materialItem6 = SCNMaterial()
-//        materialItem6.diffuse.contents = UIColor.flatPurple
-//        materialItem6.isDoubleSided = true
-//        
-//        materialArray.append(materialItem1)
-//        materialArray.append(materialItem2)
-//        materialArray.append(materialItem3)
-//        materialArray.append(materialItem4)
-//        materialArray.append(materialItem5)
-//        materialArray.append(materialItem6)
-        
         return materialArray
+        
+    }
+    
+    func rotateAll() {
+        
+        var nodeArray:[SCNNode] = []
+        nodeArray.append(boxNode1)
+        nodeArray.append(boxNode2)
+        nodeArray.append(boxNode3)
+        nodeArray.append(boxNode4)
+        nodeArray.append(boxNode5)
+        nodeArray.append(boxNode6)
+        nodeArray.append(boxNode7)
+        nodeArray.append(boxNode8)
+        
+//        for item in nodeArray {
+//            item.eulerAngles = SCNVector3Make(Float(M_PI_4),0,0)
+//        }
+        
+//        nodeArray[5].eulerAngles = SCNVector3Make(Float(M_PI_4),0,0)
+//        nodeArray[6].eulerAngles = SCNVector3Make(Float(M_PI_4),0,0)
+//        nodeArray[7].eulerAngles = SCNVector3Make(Float(M_PI_4),0,0)
+        
+//        nodeArray[5].eulerAngles = SCNVector3Make(0,0,Float(M_PI_4))
+//        nodeArray[6].eulerAngles = SCNVector3Make(0,0,Float(M_PI_4))
+//        nodeArray[7].eulerAngles = SCNVector3Make(0,0,Float(M_PI_4))
+        
         
     }
     
@@ -145,28 +138,28 @@ class SnakeCubeController: SpatialBaseController {
         boxNode2 = SCNNode(geometry: boxGeometry2)
         boxNode2.geometry?.materials = buildMaterialArray()
         boxNode2.position = position2
-        scene.rootNode.addChildNode(boxNode2)
+        boxNode1.addChildNode(boxNode2)
         
         let position3 = SCNVector3(x: 0, y: stepM, z: 0)
         let boxGeometry3 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
         boxNode3 = SCNNode(geometry: boxGeometry3)
         boxNode3.geometry?.materials = buildMaterialArray()
         boxNode3.position = position3
-        scene.rootNode.addChildNode(boxNode3)
+        boxNode1.addChildNode(boxNode3)
         
         let position4 = SCNVector3(x: 0, y: stepM * 2, z: 0)
         let boxGeometry4 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
         boxNode4 = SCNNode(geometry: boxGeometry4)
         boxNode4.geometry?.materials = buildMaterialArray()
         boxNode4.position = position4
-        scene.rootNode.addChildNode(boxNode4)
+        boxNode1.addChildNode(boxNode4)
         
         let position5 = SCNVector3(x: 0, y: stepM * 3, z: 0)
         let boxGeometry5 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
         boxNode5 = SCNNode(geometry: boxGeometry5)
         boxNode5.geometry?.materials = buildMaterialArray()
         boxNode5.position = position5
-        scene.rootNode.addChildNode(boxNode5)
+        boxNode1.addChildNode(boxNode5)
         
         
         addArrayColorIndex()
@@ -175,21 +168,57 @@ class SnakeCubeController: SpatialBaseController {
         boxNode6 = SCNNode(geometry: boxGeometry6)
         boxNode6.geometry?.materials = buildMaterialArray()
         boxNode6.position = position6
-        scene.rootNode.addChildNode(boxNode6)
+        boxNode1.addChildNode(boxNode6)
         
         let position7 = SCNVector3(x: stepM, y: stepM * 3, z: stepP)
         let boxGeometry7 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
         boxNode7 = SCNNode(geometry: boxGeometry7)
         boxNode7.geometry?.materials = buildMaterialArray()
         boxNode7.position = position7
-        scene.rootNode.addChildNode(boxNode7)
+        boxNode1.addChildNode(boxNode7)
         
         let position8 = SCNVector3(x: stepM * 2, y: stepM * 3, z: stepP)
         let boxGeometry8 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
         boxNode8 = SCNNode(geometry: boxGeometry8)
         boxNode8.geometry?.materials = buildMaterialArray()
         boxNode8.position = position8
-        scene.rootNode.addChildNode(boxNode8)
+        boxNode1.addChildNode(boxNode8)
+        
+        // test rotate
+        
+       // rotateAll()
+        
+       
+        
+  
+        
+//        
+//     boxNode1.eulerAngles = SCNVector3Make(0,0,Float(M_PI_2))
+//        
+//        boxNode1.eulerAngles = SCNVector3Make(0,Float(M_PI_2),Float(M_PI_2))
+        
+       // cameraNode.eulerAngles.x -= Float(M_PI_4)
+        
+        let roYAngle = (Float)(M_PI)/4
+        let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
+        
+        let roXAngle = (Float)(M_PI)/4
+        let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
+        
+        let roZAngle = (Float)(M_PI)/2
+        let roZMat = SCNMatrix4MakeRotation(roZAngle, 0, 0, 1)
+        
+        var finalMat :SCNMatrix4 = SCNMatrix4Identity
+        
+        finalMat  = SCNMatrix4Mult(roZMat, roYMat)
+      
+        
+
+        
+        boxNode1.transform = roZMat
+        
+       
+        
        
         
         

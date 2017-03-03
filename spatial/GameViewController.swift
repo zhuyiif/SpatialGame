@@ -390,10 +390,10 @@ class GameViewController: SpatialBaseController {
          
             
             SCLAlertView().showTitle(
-                "Congratulations", // Title of view
-                subTitle: "You are Awesome.", // String of view
+                "congrat".localized(withComment: ""), // Title of view
+                subTitle: "congrat_detail".localized(withComment: ""), // String of view
                 duration: 2.0, // Duration to show before closing automatically, default: 0.0
-                completeText: "Done", // Optional button value, default: ""
+                completeText: "done".localized(withComment: ""), // Optional button value, default: ""
                 style: .success, // Styles - see below.
                 colorStyle: 0xA429FF,
                 colorTextButton: 0xFFFFFF
@@ -406,10 +406,10 @@ class GameViewController: SpatialBaseController {
         else {
             
             SCLAlertView().showTitle(
-                "Sorry", // Title of view
-                subTitle: "You are wrong.", // String of view
+                "sorry".localized(withComment: ""), // Title of view
+                subTitle: "wrong_detail".localized(withComment: ""), // String of view
                 duration: 2.0, // Duration to show before closing automatically, default: 0.0
-                completeText: "Done", // Optional button value, default: ""
+                completeText: "done".localized(withComment: ""), // Optional button value, default: ""
                 style: .error, // Styles - see below.
                 colorStyle: UInt(UIColor.flatRed.hexValue(), radix: 16),
                 colorTextButton: UInt(UIColor.flatRed.hexValue(), radix: 16)
@@ -438,10 +438,10 @@ class GameViewController: SpatialBaseController {
         print("tips Button Clicked")
         
         SCLAlertView().showTitle(
-            "Tips", // Title of view
-            subTitle: "You can use finger rotate the box.", // String of view
+            "tips".localized(withComment: ""), // Title of view
+            subTitle: "tips_detail".localized(withComment: ""), // String of view
             duration: 2.0, // Duration to show before closing automatically, default: 0.0
-            completeText: "Done", // Optional button value, default: ""
+            completeText: "done".localized(withComment: ""), // Optional button value, default: ""
             style: .success, // Styles - see below.
             colorStyle: 0xA429FF,
             colorTextButton: 0xFFFFFF
