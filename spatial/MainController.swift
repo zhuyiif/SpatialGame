@@ -34,7 +34,7 @@ class MainController: UIViewController {
         snakeCubeButton.setImage(snameImage, for: .normal)
         snakeCubeButton.setTitleColor(UIColor.flatGreen, for:  .normal)
         
-      //  self.view.addSubview(snakeCubeButton)
+        self.view.addSubview(snakeCubeButton)
         
      
         
@@ -71,15 +71,15 @@ class MainController: UIViewController {
         
         
         
-//        snakeCubeButton.snp.makeConstraints { (make) in
-//            make.height.equalTo(50)
-//            make.top.equalTo(self.singleCubeButton).offset(100)
-//            make.left.equalTo(self.singleCubeButton)
-//            make.right.equalTo(self.singleCubeButton)
-//            
-//           
-//            
-//        }
+        snakeCubeButton.snp.makeConstraints { (make) in
+            make.height.equalTo(50)
+            make.top.equalTo(self.singleCubeButton).offset(100)
+            make.left.equalTo(self.singleCubeButton)
+            make.right.equalTo(self.singleCubeButton)
+            
+           
+            
+        }
         
         singleCubeButton.imageView?.contentMode = .scaleAspectFit
         

@@ -202,20 +202,20 @@ class SnakeCubeController: SpatialBaseController {
         let roYAngle = (Float)(M_PI)/4
         let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
         
-        let roXAngle = (Float)(M_PI)/4
+        let roXAngle = (Float) (M_PI/2 - M_PI/6)
         let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
         
-        let roZAngle = (Float)(M_PI)/2
+        let roZAngle = (Float)(M_PI/2 + M_PI/3)
         let roZMat = SCNMatrix4MakeRotation(roZAngle, 0, 0, 1)
         
         var finalMat :SCNMatrix4 = SCNMatrix4Identity
         
-        finalMat  = SCNMatrix4Mult(roZMat, roYMat)
+        finalMat  = SCNMatrix4Mult(roZMat, roXMat)
       
         
 
         
-        boxNode1.transform = roZMat
+        boxNode1.transform = finalMat
         
        
         
