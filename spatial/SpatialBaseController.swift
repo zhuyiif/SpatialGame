@@ -40,11 +40,19 @@ class SpatialBaseController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
+        self.statusBarController?.isStatusBarHidden = true
         self.view.backgroundColor = UIColor.flatBlack
         self.setupViews()
         
+      
+        
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }  
+    
+  
     func backButtonClicked() {
         self.navigationController?.popViewController(animated: true)
     }
