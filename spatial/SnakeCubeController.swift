@@ -51,7 +51,11 @@ class SnakeCubeController: SpatialBaseController {
     
     var rotateCameraNode = SCNNode()
     
-    var colorArray: [UIColor] = [UIColor.flatRed, UIColor.flatYellow, UIColor.flatBlue, UIColor.flatGreen, UIColor.flatGray, UIColor.flatPurple]
+//    var colorArray: [UIColor] = [UIColor.flatRed, UIColor.flatYellow, UIColor.flatBlue, UIColor.flatGreen, UIColor.flatGray, UIColor.flatPurple]
+    
+    var boxBg = UIImage(named: "art.scnassets/boxbg.png")
+    
+    var colorArray: [UIImage] = Array()
     
     var colorArrayIndex: Int = 0
     
@@ -59,6 +63,8 @@ class SnakeCubeController: SpatialBaseController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.colorArray = [boxBg!, boxBg!, boxBg!, boxBg!, boxBg!, boxBg!]
         setupOriginalView()
         setupQuestionView()
         
@@ -313,13 +319,13 @@ class SnakeCubeController: SpatialBaseController {
         
         //rotate
         
-        let roYAngle = (Float)(M_PI)/4
+        let roYAngle = (Float)(M_PI)/4 * (-1)
         let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
         
-        let roXAngle = (Float) (M_PI/2 - M_PI/6)
+        let roXAngle = (Float) (M_PI/4)
         let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
         
-        let roZAngle = (Float)(M_PI/2 + M_PI/3)
+        let roZAngle = (Float)(M_PI/4)
         let roZMat = SCNMatrix4MakeRotation(roZAngle, 0, 0, 1)
         
         var finalMat :SCNMatrix4 = SCNMatrix4Identity
