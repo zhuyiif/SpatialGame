@@ -69,6 +69,7 @@ class SnakeCubeController: SpatialBaseController {
         self.colorArray = [boxBg!, boxBg!, boxBg!, boxBg!, boxBg!, boxBg!]
         setupOriginalView()
         setupQuestionView()
+        setupQuestionButtonsView()
         
     }
     
@@ -342,6 +343,15 @@ class SnakeCubeController: SpatialBaseController {
        
         
         self.view.addSubview(questionButtonsView)
+        
+        questionButtonsView.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view)
+            make.top.equalTo(self.view.frame.height*6/10.0 + 54)
+            make.right.equalTo(self.view)
+            make.bottom.equalTo(self.view)
+           
+            
+        }
         
         questionButtonsView.backgroundColor = UIColor.flatOrange
         questionButtonsView.yesButton.addTarget(self, action:#selector(self.yesButtonClicked), for: .touchUpInside)
