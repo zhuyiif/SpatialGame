@@ -59,6 +59,8 @@ class SnakeCubeController: SpatialBaseController {
     
     var colorArrayIndex: Int = 0
     
+    var questionButtonsView: QuestionAndButtonsView = QuestionAndButtonsView()
+    
     
 
     override func viewDidLoad() {
@@ -334,6 +336,40 @@ class SnakeCubeController: SpatialBaseController {
         
         boxNodeT1.transform = finalMat
         
+    }
+    
+    func setupQuestionButtonsView() {
+       
+        
+        self.view.addSubview(questionButtonsView)
+        
+        questionButtonsView.backgroundColor = UIColor.flatOrange
+        questionButtonsView.yesButton.addTarget(self, action:#selector(self.yesButtonClicked), for: .touchUpInside)
+        questionButtonsView.noButton.addTarget(self, action:#selector(self.noButtonClicked), for: .touchUpInside)
+        questionButtonsView.tipsButton.addTarget(self, action:#selector(self.tipsButtonClicked), for: .touchUpInside)
+        
+    }
+    
+    func yesButtonClicked() {
+        
+        
+        showAlert(isRight: true){
+            
+        }
+        
+        
+        
+        
+    }
+    
+    func noButtonClicked() {
+        showAlert(isRight: true){
+            
+        }
+        print("no Button Clicked")
+    }
+    
+    func tipsButtonClicked() {
     }
     
  

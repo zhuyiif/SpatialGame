@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import Material
 import SnapKit
+import SCLAlertView
 
 
 class SpatialBaseController: UIViewController {
@@ -46,6 +47,41 @@ class SpatialBaseController: UIViewController {
         
       
         
+    }
+    
+    func showAlert(isRight:Bool ,closure: @escaping () -> Void) {
+        
+        if (isRight) {
+            
+            
+            SCLAlertView().showTitle(
+                "congrat".localized(withComment: ""), // Title of view
+                subTitle: "congrat_detail".localized(withComment: ""), // String of view
+                duration: 2.0, // Duration to show before closing automatically, default: 0.0
+                completeText: "done".localized(withComment: ""), // Optional button value, default: ""
+                style: .success, // Styles - see below.
+                colorStyle: 0xA429FF,
+                colorTextButton: 0xFFFFFF
+                ).setDismissBlock {
+                    closure()
+            }
+            
+            
+        }
+        else {
+            
+            SCLAlertView().showTitle(
+                "sorry".localized(withComment: ""), // Title of view
+                subTitle: "wrong_detail".localized(withComment: ""), // String of view
+                duration: 2.0, // Duration to show before closing automatically, default: 0.0
+                completeText: "done".localized(withComment: ""), // Optional button value, default: ""
+                style: .error, // Styles - see below.
+                colorStyle: UInt(UIColor.flatRed.hexValue(), radix: 16),
+                colorTextButton: UInt(UIColor.flatRed.hexValue(), radix: 16)
+            )
+            
+            
+        }
     }
     
     override var prefersStatusBarHidden: Bool {

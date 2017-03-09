@@ -384,45 +384,14 @@ class GameViewController: SpatialBaseController {
         
     }
     
-    func showAlert(isRight:Bool) {
-        
-        if (isRight) {
-         
-            
-            SCLAlertView().showTitle(
-                "congrat".localized(withComment: ""), // Title of view
-                subTitle: "congrat_detail".localized(withComment: ""), // String of view
-                duration: 2.0, // Duration to show before closing automatically, default: 0.0
-                completeText: "done".localized(withComment: ""), // Optional button value, default: ""
-                style: .success, // Styles - see below.
-                colorStyle: 0xA429FF,
-                colorTextButton: 0xFFFFFF
-                ).setDismissBlock {
-                    self.nextButtonClicked()
-            }
-            
-            
-        }
-        else {
-            
-            SCLAlertView().showTitle(
-                "sorry".localized(withComment: ""), // Title of view
-                subTitle: "wrong_detail".localized(withComment: ""), // String of view
-                duration: 2.0, // Duration to show before closing automatically, default: 0.0
-                completeText: "done".localized(withComment: ""), // Optional button value, default: ""
-                style: .error, // Styles - see below.
-                colorStyle: UInt(UIColor.flatRed.hexValue(), radix: 16),
-                colorTextButton: UInt(UIColor.flatRed.hexValue(), radix: 16)
-            )
-            
-
-        }
-    }
+   
     
     func yesButtonClicked() {
         
         
-        showAlert(isRight: self.currentAnswer)
+        showAlert(isRight: self.currentAnswer){
+            self.nextButtonClicked()
+        }
         
         
         
@@ -430,7 +399,9 @@ class GameViewController: SpatialBaseController {
     }
     
     func noButtonClicked() {
-        showAlert(isRight: !self.currentAnswer)
+        showAlert(isRight: !self.currentAnswer) {
+            self.nextButtonClicked()
+        }
         print("no Button Clicked")
     }
     
