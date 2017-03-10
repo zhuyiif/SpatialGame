@@ -74,6 +74,8 @@ class SnakeCubeController: SpatialBaseController {
     
     var blackListTuple:[(Int,Int,Int)] = []
     
+    var currentAnswer: Bool = false
+    
     
     func setupBlackList(){
         blackListTuple.append((13,3,9))
@@ -207,6 +209,50 @@ class SnakeCubeController: SpatialBaseController {
         boxNodeF1Array.append(dNode8)
         dNode1.addChildNode(dNode8)
     }
+    
+    
+    func generateFalseCube1() {
+        
+        boxNodeF1Array.removeAll()
+        
+        let dNode1 = duplicateNode(node: boxNode1)
+        boxNodeF1Array.append(dNode1)
+        
+        dNode1.enumerateChildNodes { (node, stop) -> Void in
+            node.removeFromParentNode()
+        }
+        
+        let dNode2 = duplicateNode(node: boxNode2)
+        dNode2.position.x = dNode2.position.x + stepM*(-1)
+        dNode2.position.z = dNode2.position.z + stepM*(-1)
+        boxNodeF1Array.append(dNode2)
+        dNode1.addChildNode(dNode2)
+        
+        let dNode3 = duplicateNode(node: boxNode3)
+        boxNodeF1Array.append(dNode3)
+        dNode1.addChildNode(dNode3)
+        
+        let dNode4 = duplicateNode(node: boxNode4)
+        boxNodeF1Array.append(dNode4)
+        dNode1.addChildNode(dNode4)
+        
+        let dNode5 = duplicateNode(node: boxNode5)
+        boxNodeF1Array.append(dNode5)
+        dNode1.addChildNode(dNode5)
+        
+        let dNode6 = duplicateNode(node: boxNode6)
+        boxNodeF1Array.append(dNode6)
+        dNode1.addChildNode(dNode6)
+        
+        let dNode7 = duplicateNode(node: boxNode7)
+        boxNodeF1Array.append(dNode7)
+        dNode1.addChildNode(dNode7)
+        
+        let dNode8 = duplicateNode(node: boxNode8)
+        boxNodeF1Array.append(dNode8)
+        dNode1.addChildNode(dNode8)
+    }
+
 
     
     func duplicateNode(node:SCNNode) -> SCNNode {
@@ -249,8 +295,10 @@ class SnakeCubeController: SpatialBaseController {
         boxNode2.geometry?.materials = buildMaterialArray()
         boxNode2.position = position2
         boxNode1.addChildNode(boxNode2)
+       
         
         boxNodeT2 = duplicateNode(node: boxNode2)
+        boxNodeT1.addChildNode(boxNodeT2)
         
         let position3 = SCNVector3(x: 0, y: stepM, z: 0)
         let boxGeometry3 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
@@ -260,6 +308,7 @@ class SnakeCubeController: SpatialBaseController {
         boxNode1.addChildNode(boxNode3)
         
         boxNodeT3 = duplicateNode(node: boxNode3)
+        boxNodeT1.addChildNode(boxNodeT3)
         
         let position4 = SCNVector3(x: 0, y: stepM * 2, z: 0)
         let boxGeometry4 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
@@ -269,6 +318,7 @@ class SnakeCubeController: SpatialBaseController {
         boxNode1.addChildNode(boxNode4)
         
         boxNodeT4 = duplicateNode(node: boxNode4)
+        boxNodeT1.addChildNode(boxNodeT4)
         
         let position5 = SCNVector3(x: 0, y: stepM * 3, z: 0)
         let boxGeometry5 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
@@ -278,6 +328,7 @@ class SnakeCubeController: SpatialBaseController {
         boxNode1.addChildNode(boxNode5)
         
         boxNodeT5 = duplicateNode(node: boxNode5)
+        boxNodeT1.addChildNode(boxNodeT5)
         
         
         addArrayColorIndex()
@@ -289,6 +340,7 @@ class SnakeCubeController: SpatialBaseController {
         boxNode1.addChildNode(boxNode6)
         
         boxNodeT6 = duplicateNode(node: boxNode6)
+        boxNodeT1.addChildNode(boxNodeT6)
         
         let position7 = SCNVector3(x: stepM, y: stepM * 3, z: stepP)
         let boxGeometry7 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
@@ -298,6 +350,7 @@ class SnakeCubeController: SpatialBaseController {
         boxNode1.addChildNode(boxNode7)
         
         boxNodeT7 = duplicateNode(node: boxNode7)
+        boxNodeT1.addChildNode(boxNodeT7)
         
         let position8 = SCNVector3(x: stepM * 2, y: stepM * 3, z: stepP)
         let boxGeometry8 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
@@ -307,8 +360,9 @@ class SnakeCubeController: SpatialBaseController {
         boxNode1.addChildNode(boxNode8)
         
         boxNodeT8 = duplicateNode(node: boxNode8)
+        boxNodeT1.addChildNode(boxNodeT8)
         
-        generateFalseCube()
+        generateFalseCube1()
         
         var rotate3 = generate3RoateNumber()
         
@@ -416,20 +470,25 @@ class SnakeCubeController: SpatialBaseController {
         rotateCameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
         
 //        scene.rootNode.addChildNode(boxNodeT1)
-//        boxNodeT1.addChildNode(boxNodeT2)
-//        boxNodeT1.addChildNode(boxNodeT3)
-//        boxNodeT1.addChildNode(boxNodeT4)
-//        boxNodeT1.addChildNode(boxNodeT5)
-//        boxNodeT1.addChildNode(boxNodeT6)
-//        boxNodeT1.addChildNode(boxNodeT7)
-//        boxNodeT1.addChildNode(boxNodeT8)
+//
+//        scene.rootNode.addChildNode(boxNodeF1Array[0])
         
         
-        scene.rootNode.addChildNode(boxNodeF1Array[0])
-     
+        let random = Int(arc4random_uniform(3))
         
-        var rootCode = boxNodeF1Array[0]
-       // rootCode = boxNodeT1
+      
+        var rootCode = boxNodeT1
+        
+        if random == 2 {
+            scene.rootNode.addChildNode(boxNodeF1Array[0])
+            rootCode = boxNodeF1Array[0]
+            print("false")
+        }
+        else {
+            scene.rootNode.addChildNode(boxNodeT1)
+            rootCode = boxNodeT1
+            print("true")
+        }
       
         // retrieve the SCNView
         let scnView = rotateSView
