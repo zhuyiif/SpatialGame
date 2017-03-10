@@ -49,6 +49,16 @@ func uniqueRandoms(numberOfRandoms: Int, minNum: Int, maxNum: UInt32) -> [Int] {
     return Array(uniqueNumbers).shuffle
 }
 
+func uniqueOddRandoms(numberOfRandoms: Int, minNum: Int, maxNum: UInt32) -> [Int] {
+    var uniqueNumbers = Set<Int>()
+    while uniqueNumbers.count < numberOfRandoms {
+        uniqueNumbers.insert(Int(arc4random_uniform(maxNum + 1)) + minNum)
+    }
+    return Array(uniqueNumbers).shuffle.map({
+        (value: Int) -> Int in
+        return value % 2 == 0 ? value+1:value
+    })}
+
 
 struct Constants {
     static let DICE_VIEW_MARGIN_RATIO = 0.05 // 10% margin

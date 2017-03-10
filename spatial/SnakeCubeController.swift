@@ -44,6 +44,15 @@ class SnakeCubeController: SpatialBaseController {
     var boxNodeF7: SCNNode = SCNNode()
     var boxNodeF8: SCNNode = SCNNode()
     
+    var boxNodeFF1: SCNNode = SCNNode()
+    var boxNodeFF2: SCNNode = SCNNode()
+    var boxNodeFF3: SCNNode = SCNNode()
+    var boxNodeFF4: SCNNode = SCNNode()
+    var boxNodeFF5: SCNNode = SCNNode()
+    var boxNodeFF6: SCNNode = SCNNode()
+    var boxNodeFF7: SCNNode = SCNNode()
+    var boxNodeFF8: SCNNode = SCNNode()
+    
     
     var cameraNode = SCNNode()
     
@@ -51,7 +60,7 @@ class SnakeCubeController: SpatialBaseController {
     
     var rotateCameraNode = SCNNode()
     
-//    var colorArray: [UIColor] = [UIColor.flatRed, UIColor.flatYellow, UIColor.flatBlue, UIColor.flatGreen, UIColor.flatGray, UIColor.flatPurple]
+    //    var colorArray: [UIColor] = [UIColor.flatRed, UIColor.flatYellow, UIColor.flatBlue, UIColor.flatGreen, UIColor.flatGray, UIColor.flatPurple]
     
     var boxBg = UIImage(named: "art.scnassets/boxbg.png")
     
@@ -61,11 +70,50 @@ class SnakeCubeController: SpatialBaseController {
     
     var questionButtonsView: QuestionAndButtonsView = QuestionAndButtonsView()
     
-    var origialRotate = (Int,Int,Int)(0,0,0)
+    var origialRotate = (x:Int,y:Int,z:Int)(0,0,0)
     
-
+    var blackListTuple:[(Int,Int,Int)] = []
+    
+    
+    func setupBlackList(){
+        blackListTuple.append((13,3,9))
+        blackListTuple.append((9,13,5))
+        blackListTuple.append((9,11,1))
+        blackListTuple.append((9,1,5))
+        blackListTuple.append((7,3,9))
+        blackListTuple.append((3,13,7))
+        blackListTuple.append((9,13,11))
+        blackListTuple.append((9,5,13))
+        blackListTuple.append((9,5,1))
+        blackListTuple.append((1,9,13))
+        blackListTuple.append((13,9,3))
+        blackListTuple.append((3,7,13))
+    }
+    
+    func isBlackTuble(rotate3:(Int,Int,Int)) -> Bool {
+        let result =  blackListTuple.contains{ $0 == rotate3 }
+        
+        return result
+        
+    }
+    
+    func isduplicateItemsTuble(rotate3:(Int,Int,Int)) -> Bool {
+        
+        if(rotate3.0 == rotate3.1 || rotate3.1 == rotate3.2 || rotate3.0 == rotate3.2) {
+            return true
+        }
+        else   if(abs(rotate3.0 - rotate3.1) <= 2  || abs(rotate3.1 - rotate3.2) <= 2 || abs(rotate3.0 - rotate3.2) <= 2) {
+            return true
+        }else {
+            return false
+        }
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupBlackList()
         
         self.colorArray = [boxBg!, boxBg!, boxBg!, boxBg!, boxBg!, boxBg!]
         setupOriginalView()
@@ -92,7 +140,7 @@ class SnakeCubeController: SpatialBaseController {
         
         var tempIndex = colorArrayIndex
         
-     
+        
         for _ in 0...5 {
             
             if tempIndex > 5 {
@@ -140,8 +188,8 @@ class SnakeCubeController: SpatialBaseController {
     }
     
     func setupOriginalView() {
-   
-    
+        
+        
         let scene = SCNScene()
         
         let boxSize:CGFloat = 1
@@ -161,7 +209,7 @@ class SnakeCubeController: SpatialBaseController {
         
         boxNodeT1 = duplicateNode(node: boxNode1)
         
-
+        
         let position2 = SCNVector3(x: 0, y: 0, z: stepM)
         let boxGeometry2 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
         boxNode2.geometry = boxGeometry2
@@ -227,12 +275,14 @@ class SnakeCubeController: SpatialBaseController {
         
         boxNodeT8 = duplicateNode(node: boxNode8)
         
-        let rotate3 = generate3RoateNumber()
+        var rotate3 = generate3RoateNumber()
+        
+        
         self.origialRotate = rotate3
         
         
         print("\(rotate3.x)" + ":" + "\(rotate3.y)" + ":" + "\(rotate3.z)")
-    
+        
         
         let roYAngle = (Float)(M_PI * Double(rotate3.y)/6)
         let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
@@ -248,13 +298,13 @@ class SnakeCubeController: SpatialBaseController {
         finalMat  = SCNMatrix4Mult(roZMat, roXMat)
         
         finalMat  = SCNMatrix4Mult(finalMat, roYMat)
-      
+        
         boxNode1.transform = finalMat
         
-   
+        
         
         // place the camera
-        cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
+        cameraNode.position = SCNVector3(x: 0, y: 0, z: 9)
         
         self.view.addSubview(originalSView)
         originalSView.snp.makeConstraints { (make) in
@@ -286,71 +336,31 @@ class SnakeCubeController: SpatialBaseController {
     
     func generate3RoateNumber()->(x: Int, y: Int, z: Int) {
         
-        let range: UInt32 = 12
         
-        uniqueRandoms(numberOfRandoms: 3, minNum: 1, maxNum: 11)
         
-        var rotateXNumber = generateOddRandom(range: range)
-        var rotateYNumber = generateOddRandom(range: range)
-        var rotateZNumber = generateOddRandom(range: range)
+        var rotate3:[Int] = uniqueOddRandoms(numberOfRandoms: 3, minNum: 1, maxNum: 11)
         
-        if rotateXNumber == rotateYNumber {
-            rotateXNumber = 3
-            rotateYNumber = 11
-            rotateZNumber = 7
+        
+        
+        var tuple3 = (rotate3[0],rotate3[1],rotate3[2])
+        
+        while(isBlackTuble(rotate3: tuple3) || isduplicateItemsTuble(rotate3: tuple3)){
             
-            
-        }
-        else if rotateYNumber == rotateZNumber {
-            rotateZNumber = 11
-            rotateYNumber = 5
-            rotateXNumber = 1
-            
-        }
-        else if rotateXNumber == rotateZNumber {
-            rotateZNumber = 7
-            rotateYNumber = 7
-            rotateXNumber = 5
-            
-        } else if rotateXNumber ==  11&&rotateYNumber==5&&rotateZNumber==3 {
-            rotateZNumber = 3
-            rotateYNumber = 5
-            rotateXNumber = 5
-        }
-        else if rotateXNumber ==  3&&rotateYNumber==7&&rotateZNumber==1 {
-            rotateZNumber = 3
-            rotateYNumber = 7
-            rotateXNumber = 1
-        }
-        else if rotateXNumber ==  5&&rotateYNumber==1&&rotateZNumber==3 {
-            rotateZNumber = 1
-            rotateYNumber = 1
-            rotateXNumber = 11
-        }
-        else if rotateXNumber ==  3&&rotateYNumber==1&&rotateZNumber==7 {
-            rotateZNumber = 11
-            rotateYNumber = 1
-            rotateXNumber = 7
-        }
-        else if rotateXNumber ==  11&&rotateYNumber==3&&rotateZNumber==5 {
-            rotateZNumber = 7
-            rotateYNumber = 11
-            rotateXNumber = 3
-        }
-        else if rotateXNumber ==  3&&rotateYNumber==5&&rotateZNumber==11 {
-            rotateZNumber = 11
-            rotateYNumber = 5
-            rotateXNumber = 1
+            rotate3 = uniqueOddRandoms(numberOfRandoms: 3, minNum: 1, maxNum: 11)
+            tuple3 = (rotate3[0],rotate3[1],rotate3[2])
         }
         
-        return (rotateXNumber,rotateYNumber,rotateZNumber)
+        
+        
+        
+        return tuple3
         
     }
     
     
     func generateOddRandom(range:UInt32) -> Int {
         
-         var rotateNumber = Int(arc4random_uniform(range))
+        var rotateNumber = Int(arc4random_uniform(range))
         
         if rotateNumber % 2 == 0 {
             rotateNumber += 1
@@ -408,17 +418,12 @@ class SnakeCubeController: SpatialBaseController {
         
         scnView.autoenablesDefaultLighting = false
         
-        //rotate
         
-//        let boxRatationZ = SCNAction.rotateBy(x: 0, y: 0, z: CGFloat(M_PI/8.0), duration: 0);
-//        
-//        let boxRatationX = SCNAction.rotateBy(x: CGFloat(M_PI/8.0), y: 0, z: 0, duration: 0);
-//        
-//        let boxRatationY = SCNAction.rotateBy(x: 0, y: CGFloat(M_PI/8.0)*(-1), z: 0, duration: 0);
         
-
+        
+        
         var rotate3 = generate3RoateNumber()
-       
+        
         while(rotate3 == self.origialRotate){
             rotate3 = generate3RoateNumber()
         }
@@ -441,14 +446,14 @@ class SnakeCubeController: SpatialBaseController {
         boxNodeT1.transform = finalMat
         
         
-
         
- 
+        
+        
         
     }
     
     func setupQuestionButtonsView() {
-       
+        
         
         self.view.addSubview(questionButtonsView)
         
@@ -457,7 +462,7 @@ class SnakeCubeController: SpatialBaseController {
             make.top.equalTo(self.view.frame.height*6/10.0 + 54)
             make.right.equalTo(self.view)
             make.bottom.equalTo(self.view)
-           
+            
             
         }
         
@@ -490,20 +495,10 @@ class SnakeCubeController: SpatialBaseController {
     func tipsButtonClicked() {
         //animationBox()()
         setupOriginalView()
+        setupQuestionView()
     }
     
     func animationBox() {
-        
-//        let boxRatationZ = SCNAction.rotateBy(x: 0, y: 0, z: CGFloat(M_PI/4.0*(-1)), duration: 0.1);
-//        
-//        let boxRatationX = SCNAction.rotateBy(x: CGFloat(M_PI/4.0*(-1)), y: 0, z: 0, duration: 0.1);
-//        boxNodeT1.runAction(boxRatationX) {
-//            
-//            self.boxNodeT1.runAction(boxRatationZ) {
-//                
-//            }
-//            
-//        }
         
         let roYAngle = (Float)(M_PI)/4
         let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
@@ -518,20 +513,20 @@ class SnakeCubeController: SpatialBaseController {
         
         finalMat  = SCNMatrix4Mult(roZMat, roXMat)
         
-   
+        
         
         UIView.animate(withDuration: 10, delay: 1.0, options: .curveEaseOut, animations: {
             
             self.boxNodeT1.transform = finalMat
-         
+            
         }, completion: { finished in
             print("Basket doors opened!")
         })
         
-       
+        
         
         
     }
     
- 
+    
 }

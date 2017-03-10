@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "spatial/SnakeCubeController.swift"
-            timestampString = "510804823.534707"
+            timestampString = "510867593.698484"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "SnakeCubeController"
             landmarkType = "3">
          </BreakpointContent>
