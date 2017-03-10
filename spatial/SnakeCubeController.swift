@@ -169,28 +169,43 @@ class SnakeCubeController: SpatialBaseController {
         boxNodeF1Array.removeAll()
         
         let dNode1 = duplicateNode(node: boxNode1)
+        
+        dNode1.enumerateChildNodes { (node, stop) -> Void in
+            node.removeFromParentNode()
+        }
         boxNodeF1Array.append(dNode1)
         
         let dNode2 = duplicateNode(node: boxNode2)
         boxNodeF1Array.append(dNode2)
+        dNode1.addChildNode(dNode2)
         
         let dNode3 = duplicateNode(node: boxNode3)
         boxNodeF1Array.append(dNode3)
+        dNode1.addChildNode(dNode3)
         
         let dNode4 = duplicateNode(node: boxNode4)
         boxNodeF1Array.append(dNode4)
+        dNode1.addChildNode(dNode4)
         
         let dNode5 = duplicateNode(node: boxNode5)
         boxNodeF1Array.append(dNode5)
+        dNode1.addChildNode(dNode5)
         
         let dNode6 = duplicateNode(node: boxNode6)
         boxNodeF1Array.append(dNode6)
+        dNode1.addChildNode(dNode6)
         
         let dNode7 = duplicateNode(node: boxNode7)
+        let position7 = SCNVector3(x: stepM*(-1), y: stepM * 3, z: stepP)
+        dNode7.position = position7
         boxNodeF1Array.append(dNode7)
+        dNode1.addChildNode(dNode7)
         
         let dNode8 = duplicateNode(node: boxNode8)
+        let position8 = SCNVector3(x: stepM*(-2), y: stepM * 3, z: stepP)
+        dNode8.position = position8
         boxNodeF1Array.append(dNode8)
+        dNode1.addChildNode(dNode8)
     }
 
     
@@ -410,14 +425,8 @@ class SnakeCubeController: SpatialBaseController {
 //        boxNodeT1.addChildNode(boxNodeT8)
         
         
-        for (index, item) in boxNodeF1Array.enumerated() {
-            if index == 0 {
-                scene.rootNode.addChildNode(item)
-            }
-            else {
-                boxNodeF1Array[0].addChildNode(item)
-            }
-        }
+        scene.rootNode.addChildNode(boxNodeF1Array[0])
+     
         
         var rootCode = boxNodeF1Array[0]
        // rootCode = boxNodeT1
@@ -435,9 +444,6 @@ class SnakeCubeController: SpatialBaseController {
         scnView.backgroundColor = UIColor.flatPink
         
         scnView.autoenablesDefaultLighting = false
-        
-        
-        
         
         
         var rotate3 = generate3RoateNumber()
@@ -462,11 +468,6 @@ class SnakeCubeController: SpatialBaseController {
         finalMat  = SCNMatrix4Mult(finalMat, roYMat)
         
         rootCode.transform = finalMat
-        
-        
-        
-        
-        
         
     }
     
