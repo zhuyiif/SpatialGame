@@ -41,6 +41,14 @@ struct VisiableSides {
     
 }
 
+func uniqueRandoms(numberOfRandoms: Int, minNum: Int, maxNum: UInt32) -> [Int] {
+    var uniqueNumbers = Set<Int>()
+    while uniqueNumbers.count < numberOfRandoms {
+        uniqueNumbers.insert(Int(arc4random_uniform(maxNum + 1)) + minNum)
+    }
+    return Array(uniqueNumbers).shuffle
+}
+
 
 struct Constants {
     static let DICE_VIEW_MARGIN_RATIO = 0.05 // 10% margin

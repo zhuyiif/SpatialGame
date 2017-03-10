@@ -61,6 +61,7 @@ class SnakeCubeController: SpatialBaseController {
     
     var questionButtonsView: QuestionAndButtonsView = QuestionAndButtonsView()
     
+    var origialRotate = (Int,Int,Int)(0,0,0)
     
 
     override func viewDidLoad() {
@@ -226,23 +227,31 @@ class SnakeCubeController: SpatialBaseController {
         
         boxNodeT8 = duplicateNode(node: boxNode8)
         
+        let rotate3 = generate3RoateNumber()
+        self.origialRotate = rotate3
+        
+        
+        print("\(rotate3.x)" + ":" + "\(rotate3.y)" + ":" + "\(rotate3.z)")
     
         
-        let roYAngle = (Float)(M_PI)/4
+        let roYAngle = (Float)(M_PI * Double(rotate3.y)/6)
         let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
         
-        let roXAngle = (Float) (M_PI/2 - M_PI/6)
+        let roXAngle = (Float)(M_PI * Double(rotate3.x)/6)
         let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
         
-        let roZAngle = (Float)(M_PI/2 + M_PI/3)
+        let roZAngle = (Float)(M_PI * Double(rotate3.z)/6)
         let roZMat = SCNMatrix4MakeRotation(roZAngle, 0, 0, 1)
         
         var finalMat :SCNMatrix4 = SCNMatrix4Identity
         
         finalMat  = SCNMatrix4Mult(roZMat, roXMat)
+        
+        finalMat  = SCNMatrix4Mult(finalMat, roYMat)
       
         boxNode1.transform = finalMat
         
+   
         
         // place the camera
         cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
@@ -273,6 +282,85 @@ class SnakeCubeController: SpatialBaseController {
         
         
         
+    }
+    
+    func generate3RoateNumber()->(x: Int, y: Int, z: Int) {
+        
+        let range: UInt32 = 12
+        
+        uniqueRandoms(numberOfRandoms: 3, minNum: 1, maxNum: 11)
+        
+        var rotateXNumber = generateOddRandom(range: range)
+        var rotateYNumber = generateOddRandom(range: range)
+        var rotateZNumber = generateOddRandom(range: range)
+        
+        if rotateXNumber == rotateYNumber {
+            rotateXNumber = 3
+            rotateYNumber = 11
+            rotateZNumber = 7
+            
+            
+        }
+        else if rotateYNumber == rotateZNumber {
+            rotateZNumber = 11
+            rotateYNumber = 5
+            rotateXNumber = 1
+            
+        }
+        else if rotateXNumber == rotateZNumber {
+            rotateZNumber = 7
+            rotateYNumber = 7
+            rotateXNumber = 5
+            
+        } else if rotateXNumber ==  11&&rotateYNumber==5&&rotateZNumber==3 {
+            rotateZNumber = 3
+            rotateYNumber = 5
+            rotateXNumber = 5
+        }
+        else if rotateXNumber ==  3&&rotateYNumber==7&&rotateZNumber==1 {
+            rotateZNumber = 3
+            rotateYNumber = 7
+            rotateXNumber = 1
+        }
+        else if rotateXNumber ==  5&&rotateYNumber==1&&rotateZNumber==3 {
+            rotateZNumber = 1
+            rotateYNumber = 1
+            rotateXNumber = 11
+        }
+        else if rotateXNumber ==  3&&rotateYNumber==1&&rotateZNumber==7 {
+            rotateZNumber = 11
+            rotateYNumber = 1
+            rotateXNumber = 7
+        }
+        else if rotateXNumber ==  11&&rotateYNumber==3&&rotateZNumber==5 {
+            rotateZNumber = 7
+            rotateYNumber = 11
+            rotateXNumber = 3
+        }
+        else if rotateXNumber ==  3&&rotateYNumber==5&&rotateZNumber==11 {
+            rotateZNumber = 11
+            rotateYNumber = 5
+            rotateXNumber = 1
+        }
+        
+        return (rotateXNumber,rotateYNumber,rotateZNumber)
+        
+    }
+    
+    
+    func generateOddRandom(range:UInt32) -> Int {
+        
+         var rotateNumber = Int(arc4random_uniform(range))
+        
+        if rotateNumber % 2 == 0 {
+            rotateNumber += 1
+        }
+        
+        if rotateNumber == 9 {
+            rotateNumber = 11
+        }
+        
+        return rotateNumber
     }
     
     
@@ -322,20 +410,40 @@ class SnakeCubeController: SpatialBaseController {
         
         //rotate
         
-        let roYAngle = (Float)(M_PI)/4 * (-1)
+//        let boxRatationZ = SCNAction.rotateBy(x: 0, y: 0, z: CGFloat(M_PI/8.0), duration: 0);
+//        
+//        let boxRatationX = SCNAction.rotateBy(x: CGFloat(M_PI/8.0), y: 0, z: 0, duration: 0);
+//        
+//        let boxRatationY = SCNAction.rotateBy(x: 0, y: CGFloat(M_PI/8.0)*(-1), z: 0, duration: 0);
+        
+
+        var rotate3 = generate3RoateNumber()
+       
+        while(rotate3 == self.origialRotate){
+            rotate3 = generate3RoateNumber()
+        }
+        
+        let roYAngle = (Float)(M_PI * Double(rotate3.y)/6)
         let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
         
-        let roXAngle = (Float) (M_PI/4)
+        let roXAngle = (Float)(M_PI * Double(rotate3.x)/6)
         let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
         
-        let roZAngle = (Float)(M_PI/4)
+        let roZAngle = (Float)(M_PI * Double(rotate3.z)/6)
         let roZMat = SCNMatrix4MakeRotation(roZAngle, 0, 0, 1)
         
         var finalMat :SCNMatrix4 = SCNMatrix4Identity
         
         finalMat  = SCNMatrix4Mult(roZMat, roXMat)
         
+        finalMat  = SCNMatrix4Mult(finalMat, roYMat)
+        
         boxNodeT1.transform = finalMat
+        
+        
+
+        
+ 
         
     }
     
@@ -380,6 +488,49 @@ class SnakeCubeController: SpatialBaseController {
     }
     
     func tipsButtonClicked() {
+        //animationBox()()
+        setupOriginalView()
+    }
+    
+    func animationBox() {
+        
+//        let boxRatationZ = SCNAction.rotateBy(x: 0, y: 0, z: CGFloat(M_PI/4.0*(-1)), duration: 0.1);
+//        
+//        let boxRatationX = SCNAction.rotateBy(x: CGFloat(M_PI/4.0*(-1)), y: 0, z: 0, duration: 0.1);
+//        boxNodeT1.runAction(boxRatationX) {
+//            
+//            self.boxNodeT1.runAction(boxRatationZ) {
+//                
+//            }
+//            
+//        }
+        
+        let roYAngle = (Float)(M_PI)/4
+        let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
+        
+        let roXAngle = (Float) (M_PI/2 - M_PI/6)
+        let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
+        
+        let roZAngle = (Float)(M_PI/2 + M_PI/3)
+        let roZMat = SCNMatrix4MakeRotation(roZAngle, 0, 0, 1)
+        
+        var finalMat :SCNMatrix4 = SCNMatrix4Identity
+        
+        finalMat  = SCNMatrix4Mult(roZMat, roXMat)
+        
+   
+        
+        UIView.animate(withDuration: 10, delay: 1.0, options: .curveEaseOut, animations: {
+            
+            self.boxNodeT1.transform = finalMat
+         
+        }, completion: { finished in
+            print("Basket doors opened!")
+        })
+        
+       
+        
+        
     }
     
  

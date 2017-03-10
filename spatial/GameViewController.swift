@@ -159,13 +159,13 @@ class GameViewController: SpatialBaseController {
         buildQuestions()
     }
     
-    func uniqueRandoms(numberOfRandoms: Int, minNum: Int, maxNum: UInt32) -> [Int] {
-        var uniqueNumbers = Set<Int>()
-        while uniqueNumbers.count < numberOfRandoms {
-            uniqueNumbers.insert(Int(arc4random_uniform(maxNum + 1)) + minNum)
-        }
-        return Array(uniqueNumbers).shuffle
-    }
+//    func uniqueRandoms(numberOfRandoms: Int, minNum: Int, maxNum: UInt32) -> [Int] {
+//        var uniqueNumbers = Set<Int>()
+//        while uniqueNumbers.count < numberOfRandoms {
+//            uniqueNumbers.insert(Int(arc4random_uniform(maxNum + 1)) + minNum)
+//        }
+//        return Array(uniqueNumbers).shuffle
+//    }
     
     
     func buildQuestions(){
