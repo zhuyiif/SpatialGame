@@ -125,6 +125,8 @@ class SnakeCubeController: SpatialBaseController {
         blackListTuple1.append((13,9,1))
         blackListTuple1.append((9,13,3))
         blackListTuple1.append((1,13,9))
+        blackListTuple1.append((7,1,13))
+        blackListTuple1.append((9,13,1))
    
     }
     
