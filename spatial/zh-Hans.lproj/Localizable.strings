@@ -10,6 +10,7 @@
 "no" = "不可以";
 "tips" = "提示";
 "questions" = "中间这个立方体可以被上面的平面图折出来吗?";
+"questions1" = "这两个形状完全一样吗?";
 "snake_menu" = "蛇形立方";
 "cube_menu"  = "折叠立方";
 "congrat" = "恭喜";

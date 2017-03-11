@@ -130,7 +130,7 @@ class GameViewController: SpatialBaseController {
         scnView.scene = scene
         
         // allows the user to manipulate the camera
-        //scnView.allowsCameraControl = true
+        scnView.allowsCameraControl = true
         
         
         // configure the view
@@ -144,6 +144,8 @@ class GameViewController: SpatialBaseController {
         questionButtonsView = QuestionAndButtonsView(frame: CGRect(x: 0, y: self.diceView.frame.height + self.mainBoxView.frame.height , width: self.view.frame.width, height: self.view.frame.height*3/10))
         
         self.view.addSubview(questionButtonsView)
+        
+        questionButtonsView.questionsLabel.text = "questions".localized(withComment: "")
         
         questionButtonsView.backgroundColor = UIColor.flatOrange
         questionButtonsView.yesButton.addTarget(self, action:#selector(self.yesButtonClicked), for: .touchUpInside)
@@ -428,15 +430,22 @@ class GameViewController: SpatialBaseController {
     func nextButtonClicked() {
         
         buildQuestions()
-        mainBoxView.allowsCameraControl = false
+        mainBoxView.allowsCameraControl = true
         
     }
     
     
     func animationBox() {
         
-        let boxRatation = SCNAction.rotateBy(x: 0, y: 1, z: 0, duration: 1);
-        boxNode.runAction(boxRatation)
+        let boxRatation = SCNAction.rotateBy(x: 0, y: 1, z: 0, duration: 0.5);
+        
+        let boxRatation1 = SCNAction.rotateBy(x: 0, y: -1, z: 0, duration: 0.5);
+        
+       
+        
+        boxNode.runAction(boxRatation) {
+            self.boxNode.runAction(boxRatation1)
+        }
         
         
     }

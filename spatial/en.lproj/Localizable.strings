@@ -9,6 +9,7 @@
 "no" = "No";
 "tips" = "Tips";
 "questions" = "Dose the middle cube can be made based on the unfolded cube?";
+"questions1" = "Are these two shapes the same?";
 "snake_menu" = "snake cube";
 "cube_menu"  = "foldable cube";
 "congrat" = "Congratulations";

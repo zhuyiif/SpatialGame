@@ -73,6 +73,7 @@ class SnakeCubeController: SpatialBaseController {
     var origialRotate = (x:Int,y:Int,z:Int)(0,0,0)
     
     var blackListTuple:[(Int,Int,Int)] = []
+    var blackListTuple1:[(Int,Int,Int)] = []
     
     var currentAnswer: Bool = false
     
@@ -92,8 +93,50 @@ class SnakeCubeController: SpatialBaseController {
         blackListTuple.append((3,7,13))
     }
     
+    func setupBlackList1(){
+        blackListTuple1.append((9,5,7))
+        blackListTuple1.append((13,9,5))
+        blackListTuple1.append((9,3,13))
+        blackListTuple1.append((1,9,5))
+        blackListTuple1.append((9,5,1))
+        blackListTuple1.append((9,5,13))
+        blackListTuple1.append((7,3,11))
+        blackListTuple1.append((3,9,13))
+        blackListTuple1.append((13,9,3))
+        blackListTuple1.append((11,3,7))
+        blackListTuple1.append((3,13,7))
+        blackListTuple1.append((7,3,13))
+        blackListTuple1.append((9,13,1))
+        blackListTuple1.append((3,7,11))
+        blackListTuple1.append((5,9,13))
+         blackListTuple1.append((7,3,11))
+        blackListTuple1.append((5,9,1))
+        blackListTuple1.append((3,13,9))
+        blackListTuple1.append((1,11,5))
+        blackListTuple1.append((9,1,13))
+        blackListTuple1.append((1,11,5))
+        blackListTuple1.append((3,11,7))
+        blackListTuple1.append((13,3,7))
+        blackListTuple1.append((9,13,5))
+        blackListTuple1.append((9,1,5))
+        blackListTuple1.append((1,9,13))
+        blackListTuple1.append((3,7,13))
+        blackListTuple1.append((13,3,9))
+        blackListTuple1.append((13,9,1))
+        blackListTuple1.append((9,13,3))
+        blackListTuple1.append((1,13,9))
+   
+    }
+    
     func isBlackTuble(rotate3:(Int,Int,Int)) -> Bool {
         let result =  blackListTuple.contains{ $0 == rotate3 }
+        
+        return result
+        
+    }
+    
+    func isBlackTuble1(rotate3:(Int,Int,Int)) -> Bool {
+        let result =  blackListTuple1.contains{ $0 == rotate3 }
         
         return result
         
@@ -116,10 +159,12 @@ class SnakeCubeController: SpatialBaseController {
         super.viewDidLoad()
         
         setupBlackList()
+        setupBlackList1()
         
         self.colorArray = [boxBg!, boxBg!, boxBg!, boxBg!, boxBg!, boxBg!]
         setupOriginalView()
         setupQuestionView()
+        nextQuestion(scene: rotateSView.scene!)
         setupQuestionButtonsView()
         
     }
@@ -253,6 +298,34 @@ class SnakeCubeController: SpatialBaseController {
         dNode1.addChildNode(dNode8)
     }
 
+    
+    func generateRightCube(){
+        
+        boxNodeT1 = duplicateNode(node: boxNode1)
+        
+        boxNodeT2 = duplicateNode(node: boxNode2)
+        boxNodeT1.addChildNode(boxNodeT2)
+        
+        boxNodeT3 = duplicateNode(node: boxNode3)
+        boxNodeT1.addChildNode(boxNodeT3)
+        
+        boxNodeT4 = duplicateNode(node: boxNode4)
+        boxNodeT1.addChildNode(boxNodeT4)
+        
+        boxNodeT5 = duplicateNode(node: boxNode5)
+        boxNodeT1.addChildNode(boxNodeT5)
+        
+        boxNodeT6 = duplicateNode(node: boxNode6)
+        boxNodeT1.addChildNode(boxNodeT6)
+        
+        boxNodeT7 = duplicateNode(node: boxNode7)
+        boxNodeT1.addChildNode(boxNodeT7)
+        
+        boxNodeT8 = duplicateNode(node: boxNode8)
+        boxNodeT1.addChildNode(boxNodeT8)
+
+        
+    }
 
     
     func duplicateNode(node:SCNNode) -> SCNNode {
@@ -285,8 +358,7 @@ class SnakeCubeController: SpatialBaseController {
         boxNode1.geometry = boxGeometry
         scene.rootNode.addChildNode(boxNode1)
         boxNode1.geometry?.materials = buildMaterialArray()
-        
-        boxNodeT1 = duplicateNode(node: boxNode1)
+      
         
         
         let position2 = SCNVector3(x: 0, y: 0, z: stepM)
@@ -297,8 +369,7 @@ class SnakeCubeController: SpatialBaseController {
         boxNode1.addChildNode(boxNode2)
        
         
-        boxNodeT2 = duplicateNode(node: boxNode2)
-        boxNodeT1.addChildNode(boxNodeT2)
+      
         
         let position3 = SCNVector3(x: 0, y: stepM, z: 0)
         let boxGeometry3 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
@@ -317,8 +388,7 @@ class SnakeCubeController: SpatialBaseController {
         boxNode4.position = position4
         boxNode1.addChildNode(boxNode4)
         
-        boxNodeT4 = duplicateNode(node: boxNode4)
-        boxNodeT1.addChildNode(boxNodeT4)
+       
         
         let position5 = SCNVector3(x: 0, y: stepM * 3, z: 0)
         let boxGeometry5 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
@@ -327,8 +397,7 @@ class SnakeCubeController: SpatialBaseController {
         boxNode5.position = position5
         boxNode1.addChildNode(boxNode5)
         
-        boxNodeT5 = duplicateNode(node: boxNode5)
-        boxNodeT1.addChildNode(boxNodeT5)
+       
         
         
         addArrayColorIndex()
@@ -339,8 +408,7 @@ class SnakeCubeController: SpatialBaseController {
         boxNode6.position = position6
         boxNode1.addChildNode(boxNode6)
         
-        boxNodeT6 = duplicateNode(node: boxNode6)
-        boxNodeT1.addChildNode(boxNodeT6)
+       
         
         let position7 = SCNVector3(x: stepM, y: stepM * 3, z: stepP)
         let boxGeometry7 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
@@ -349,8 +417,7 @@ class SnakeCubeController: SpatialBaseController {
         boxNode7.position = position7
         boxNode1.addChildNode(boxNode7)
         
-        boxNodeT7 = duplicateNode(node: boxNode7)
-        boxNodeT1.addChildNode(boxNodeT7)
+        
         
         let position8 = SCNVector3(x: stepM * 2, y: stepM * 3, z: stepP)
         let boxGeometry8 = SCNBox(width: boxSize, height: boxSize, length: boxSize, chamferRadius: 0)
@@ -359,39 +426,7 @@ class SnakeCubeController: SpatialBaseController {
         boxNode8.position = position8
         boxNode1.addChildNode(boxNode8)
         
-        boxNodeT8 = duplicateNode(node: boxNode8)
-        boxNodeT1.addChildNode(boxNodeT8)
-        
-        generateFalseCube1()
-        
-        var rotate3 = generate3RoateNumber()
-        
-        
-        self.origialRotate = rotate3
-        
-        
-        print("\(rotate3.x)" + ":" + "\(rotate3.y)" + ":" + "\(rotate3.z)")
-        
-        
-        let roYAngle = (Float)(M_PI * Double(rotate3.y)/6)
-        let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
-        
-        let roXAngle = (Float)(M_PI * Double(rotate3.x)/6)
-        let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
-        
-        let roZAngle = (Float)(M_PI * Double(rotate3.z)/6)
-        let roZMat = SCNMatrix4MakeRotation(roZAngle, 0, 0, 1)
-        
-        var finalMat :SCNMatrix4 = SCNMatrix4Identity
-        
-        finalMat  = SCNMatrix4Mult(roZMat, roXMat)
-        
-        finalMat  = SCNMatrix4Mult(finalMat, roYMat)
-        
-        boxNode1.transform = finalMat
-        
-        
-        
+      
         // place the camera
         cameraNode.position = SCNVector3(x: 0, y: 0, z: 9)
         
@@ -440,8 +475,27 @@ class SnakeCubeController: SpatialBaseController {
         }
         
         
+        return tuple3
+        
+    }
+    
+    func generate3RoateNumber1()->(x: Int, y: Int, z: Int) {
         
         
+        
+        var rotate3:[Int] = uniqueOddRandoms(numberOfRandoms: 3, minNum: 1, maxNum: 11)
+        
+        
+        
+        var tuple3 = (rotate3[0],rotate3[1],rotate3[2])
+        
+        while(isBlackTuble1(rotate3: tuple3) || isduplicateItemsTuble(rotate3: tuple3)){
+            
+            rotate3 = uniqueOddRandoms(numberOfRandoms: 3, minNum: 1, maxNum: 11)
+            tuple3 = (rotate3[0],rotate3[1],rotate3[2])
+        }
+        
+   
         return tuple3
         
     }
@@ -467,28 +521,9 @@ class SnakeCubeController: SpatialBaseController {
         scene.rootNode.addChildNode(rotateCameraNode)
         
         // place the camera
-        rotateCameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
+        rotateCameraNode.position = SCNVector3(x: 0, y: 0, z: 9)
         
-//        scene.rootNode.addChildNode(boxNodeT1)
-//
-//        scene.rootNode.addChildNode(boxNodeF1Array[0])
-        
-        
-        let random = Int(arc4random_uniform(3))
-        
-      
-        var rootCode = boxNodeT1
-        
-        if random == 2 {
-            scene.rootNode.addChildNode(boxNodeF1Array[0])
-            rootCode = boxNodeF1Array[0]
-            print("false")
-        }
-        else {
-            scene.rootNode.addChildNode(boxNodeT1)
-            rootCode = boxNodeT1
-            print("true")
-        }
+
       
         // retrieve the SCNView
         let scnView = rotateSView
@@ -500,25 +535,34 @@ class SnakeCubeController: SpatialBaseController {
         scnView.allowsCameraControl = true
         
         // configure the view
-        scnView.backgroundColor = UIColor.flatPink
+        scnView.backgroundColor = UIColor.flatLime
         
         scnView.autoenablesDefaultLighting = false
         
         
+    }
+    
+    func nextQuestion(scene:SCNScene){
+        
+        //prepare orginal
+        
         var rotate3 = generate3RoateNumber()
         
-        while(rotate3 == self.origialRotate){
-            rotate3 = generate3RoateNumber()
-        }
         
-        let roYAngle = (Float)(M_PI * Double(rotate3.y)/6)
-        let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
+        self.origialRotate = rotate3
         
-        let roXAngle = (Float)(M_PI * Double(rotate3.x)/6)
-        let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
         
-        let roZAngle = (Float)(M_PI * Double(rotate3.z)/6)
-        let roZMat = SCNMatrix4MakeRotation(roZAngle, 0, 0, 1)
+        print("\(rotate3.x)" + ":" + "\(rotate3.y)" + ":" + "\(rotate3.z)")
+        
+        
+        var roYAngle = (Float)(M_PI * Double(rotate3.y)/6)
+        var roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
+        
+        var roXAngle = (Float)(M_PI * Double(rotate3.x)/6)
+        var roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
+        
+        var roZAngle = (Float)(M_PI * Double(rotate3.z)/6)
+        var roZMat = SCNMatrix4MakeRotation(roZAngle, 0, 0, 1)
         
         var finalMat :SCNMatrix4 = SCNMatrix4Identity
         
@@ -526,7 +570,83 @@ class SnakeCubeController: SpatialBaseController {
         
         finalMat  = SCNMatrix4Mult(finalMat, roYMat)
         
+        boxNode1.transform = finalMat
+
+        
+        // pepare question
+        
+        
+        
+        scene.rootNode.enumerateChildNodes { (node, stop) -> Void in
+            node.removeFromParentNode()
+        }
+        
+        generateRightCube()
+        
+        rotateCameraNode = SCNNode()
+        rotateCameraNode.camera = SCNCamera()
+        scene.rootNode.addChildNode(rotateCameraNode)
+        
+        // place the camera
+        rotateCameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
+        
+        
+        generateFalseCube1()
+        let random = Int(arc4random_uniform(3))
+        
+        var rootCode = boxNodeT1
+        
+        if random == 2 {
+            scene.rootNode.addChildNode(boxNodeF1Array[0])
+            rootCode = boxNodeF1Array[0]
+            self.currentAnswer = false
+            print("false")
+            
+            rotate3 = generate3RoateNumber1()
+            
+            while(rotate3 == self.origialRotate){
+                rotate3 = generate3RoateNumber1()
+            }
+
+        }
+        else {
+            scene.rootNode.addChildNode(boxNodeT1)
+            rootCode = boxNodeT1
+            print("true")
+            self.currentAnswer = true
+            
+            rotate3 = generate3RoateNumber()
+            
+            while(rotate3 == self.origialRotate){
+                rotate3 = generate3RoateNumber()
+            }
+
+        }
+        
+        
+        print("q:"+"\(rotate3.x)" + ":" + "\(rotate3.y)" + ":" + "\(rotate3.z)")
+        
+        roYAngle = (Float)(M_PI * Double(rotate3.y)/6)
+        roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
+        
+        roXAngle = (Float)(M_PI * Double(rotate3.x)/6)
+        roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
+        
+        roZAngle = (Float)(M_PI * Double(rotate3.z)/6)
+        roZMat = SCNMatrix4MakeRotation(roZAngle, 0, 0, 1)
+        
+        finalMat  = SCNMatrix4Identity
+        
+        finalMat  = SCNMatrix4Mult(roZMat, roXMat)
+        
+        finalMat  = SCNMatrix4Mult(finalMat, roYMat)
+        
         rootCode.transform = finalMat
+        
+        // prepare orginal
+        
+        
+        
         
     }
     
@@ -544,6 +664,8 @@ class SnakeCubeController: SpatialBaseController {
             
         }
         
+        questionButtonsView.questionsLabel.text = "questions1".localized(withComment: "")
+        
         questionButtonsView.backgroundColor = UIColor.flatOrange
         questionButtonsView.yesButton.addTarget(self, action:#selector(self.yesButtonClicked), for: .touchUpInside)
         questionButtonsView.noButton.addTarget(self, action:#selector(self.noButtonClicked), for: .touchUpInside)
@@ -553,58 +675,48 @@ class SnakeCubeController: SpatialBaseController {
     
     func yesButtonClicked() {
         
-        
-        showAlert(isRight: true){
+    
+        showAlert(isRight: self.currentAnswer){
+            
+            self.nextQuestion(scene: self.rotateSView.scene!)
             
         }
-        
-        
         
         
     }
     
     func noButtonClicked() {
-        showAlert(isRight: true){
+        showAlert(isRight: !self.currentAnswer){
+            
+            self.nextQuestion(scene: self.rotateSView.scene!)
             
         }
-        print("no Button Clicked")
+        
     }
     
     func tipsButtonClicked() {
-        //animationBox()()
-        setupOriginalView()
-        setupQuestionView()
+        
+        let boxRatation = SCNAction.rotateBy(x: 1, y: 1, z: 1, duration: 0.5);
+        
+        let boxRatation1 = SCNAction.rotateBy(x: -1, y: -1, z: -1, duration: 0.5);
+        
+        boxNode1.runAction(boxRatation) {
+            self.boxNode1.runAction(boxRatation1)
+        }
+        
+        
+        boxNodeT1.runAction(boxRatation) {
+            self.boxNodeT1.runAction(boxRatation1)
+        }
+        
+        
+        boxNodeF1Array[0].runAction(boxRatation) {
+            self.boxNodeF1Array[0].runAction(boxRatation1)
+        }
+        
     }
     
-    func animationBox() {
-        
-        let roYAngle = (Float)(M_PI)/4
-        let roYMat = SCNMatrix4MakeRotation(roYAngle, 0, 1, 0)
-        
-        let roXAngle = (Float) (M_PI/2 - M_PI/6)
-        let roXMat = SCNMatrix4MakeRotation(roXAngle, 1, 0, 0)
-        
-        let roZAngle = (Float)(M_PI/2 + M_PI/3)
-        let roZMat = SCNMatrix4MakeRotation(roZAngle, 0, 0, 1)
-        
-        var finalMat :SCNMatrix4 = SCNMatrix4Identity
-        
-        finalMat  = SCNMatrix4Mult(roZMat, roXMat)
-        
-        
-        
-        UIView.animate(withDuration: 10, delay: 1.0, options: .curveEaseOut, animations: {
-            
-            self.boxNodeT1.transform = finalMat
-            
-        }, completion: { finished in
-            print("Basket doors opened!")
-        })
-        
-        
-        
-        
-    }
+
     
     
 }

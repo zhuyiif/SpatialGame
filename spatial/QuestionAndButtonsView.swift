@@ -29,7 +29,7 @@ class QuestionAndButtonsView: UIView {
         
         
         questionsLabel.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: CGFloat(buttonTop))
-        questionsLabel.text = "questions".localized(withComment: "")
+      //  questionsLabel.text = "questions".localized(withComment: "")
         questionsLabel.lineBreakMode = .byWordWrapping // or NSLineBreakMode.ByWordWrapping
         questionsLabel.numberOfLines = 0
         questionsLabel.textAlignment = NSTextAlignment.center
