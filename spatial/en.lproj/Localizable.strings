@@ -9,3 +9,14 @@
 "no" = "No";
 "tips" = "Tips";
 "questions" = "Dose the middle cube can be made based on the unfolded cube?";
+"questions1" = "Are these two shapes the same?";
+"snake_menu" = "snake cube";
+"cube_menu"  = "foldable cube";
+"congrat" = "Congratulations";
+"congrat_detail" = "You are Awesome.";
+"done" = "Done";
+"sorry" = "Sorry";
+"wrong_detail" = "You are wrong.";
+"tips" = "Tips";
+"tips_detail" = "You can use finger rotate the box.";
+"back" = "Back";

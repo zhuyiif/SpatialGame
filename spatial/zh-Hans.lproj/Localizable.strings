@@ -10,3 +10,15 @@
 "no" = "不可以";
 "tips" = "提示";
 "questions" = "中间这个立方体可以被上面的平面图折出来吗?";
+"questions1" = "这两个形状完全一样吗?";
+"snake_menu" = "蛇形立方";
+"cube_menu"  = "折叠立方";
+"congrat" = "恭喜";
+"congrat_detail" = "你太棒了.";
+"done" = "完成";
+"sorry" = "对不起";
+"wrong_detail" = "你做错了.";
+"tips" = "提示";
+"tips_detail" = "你可以用手指旋转立方体.";
+"back" = "返回";
+

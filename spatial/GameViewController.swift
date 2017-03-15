@@ -16,7 +16,7 @@ import SCLAlertView
 
 
 
-class GameViewController: UIViewController {
+class GameViewController: SpatialBaseController {
     
     var currentAnswer: Bool = false
     
@@ -37,13 +37,6 @@ class GameViewController: UIViewController {
     var cameraNode = SCNNode()
     
     var diceRotateSidesDictionary = [RotationXYNum : VisiableSides]()
-    
-    
-    fileprivate func prepareRaisedButton() {
-      
-        
-        
-    }
     
     
     func initDiceDicData() {
@@ -72,11 +65,31 @@ class GameViewController: UIViewController {
         
     }
     
-    func setupViews() {
+    func setupSubViews() {
         setupDiceView()
         setupMainBoxView()
         setupQuestionButtonsView()
         self.view.backgroundColor = UIColor.flatBlack
+        
+        self.view.addSubview(backButton)
+        backButton.backgroundColor = UIColor.flatWhite
+        backButton.setTitle("back".localized(withComment: ""), for: .normal)
+        backButton.setTitleColor(UIColor.flatGreen, for:  .normal)
+        backButton.make3D()
+        backButton.snp.makeConstraints { (make) in
+            
+            make.left.equalTo(self.view).offset(12)
+            make.top.equalTo(self.view).offset(12)
+            
+            make.height.equalTo(34)
+            make.width.equalTo(44)
+            
+            
+        }
+        
+        self.backButton.addTarget(self, action:#selector(self.backButtonClicked), for: .touchUpInside)
+        
+
     }
     
     func setupDiceView() {
@@ -104,6 +117,7 @@ class GameViewController: UIViewController {
         cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
         
         
+        
         mainBoxView.frame = CGRect(x: 0, y: self.diceView.frame.height , width: self.view.frame.width, height: self.view.frame.height*4/10.0)
         mainBoxView.backgroundColor = UIColor.white
         
@@ -116,7 +130,7 @@ class GameViewController: UIViewController {
         scnView.scene = scene
         
         // allows the user to manipulate the camera
-        //scnView.allowsCameraControl = true
+        scnView.allowsCameraControl = true
         
         
         // configure the view
@@ -131,6 +145,8 @@ class GameViewController: UIViewController {
         
         self.view.addSubview(questionButtonsView)
         
+        questionButtonsView.questionsLabel.text = "questions".localized(withComment: "")
+        
         questionButtonsView.backgroundColor = UIColor.flatOrange
         questionButtonsView.yesButton.addTarget(self, action:#selector(self.yesButtonClicked), for: .touchUpInside)
         questionButtonsView.noButton.addTarget(self, action:#selector(self.noButtonClicked), for: .touchUpInside)
@@ -140,21 +156,18 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         initDiceDicData()
-        setupViews()
-        
+        setupSubViews()
         buildQuestions()
-        
     }
     
-    func uniqueRandoms(numberOfRandoms: Int, minNum: Int, maxNum: UInt32) -> [Int] {
-        var uniqueNumbers = Set<Int>()
-        while uniqueNumbers.count < numberOfRandoms {
-            uniqueNumbers.insert(Int(arc4random_uniform(maxNum + 1)) + minNum)
-        }
-        return Array(uniqueNumbers).shuffle
-    }
+//    func uniqueRandoms(numberOfRandoms: Int, minNum: Int, maxNum: UInt32) -> [Int] {
+//        var uniqueNumbers = Set<Int>()
+//        while uniqueNumbers.count < numberOfRandoms {
+//            uniqueNumbers.insert(Int(arc4random_uniform(maxNum + 1)) + minNum)
+//        }
+//        return Array(uniqueNumbers).shuffle
+//    }
     
     
     func buildQuestions(){
@@ -373,45 +386,14 @@ class GameViewController: UIViewController {
         
     }
     
-    func showAlert(isRight:Bool) {
-        
-        if (isRight) {
-         
-            
-            SCLAlertView().showTitle(
-                "Congratulations", // Title of view
-                subTitle: "You are Awesome.", // String of view
-                duration: 2.0, // Duration to show before closing automatically, default: 0.0
-                completeText: "Done", // Optional button value, default: ""
-                style: .success, // Styles - see below.
-                colorStyle: 0xA429FF,
-                colorTextButton: 0xFFFFFF
-                ).setDismissBlock {
-                    self.nextButtonClicked()
-            }
-            
-            
-        }
-        else {
-            
-            SCLAlertView().showTitle(
-                "Sorry", // Title of view
-                subTitle: "You are wrong.", // String of view
-                duration: 2.0, // Duration to show before closing automatically, default: 0.0
-                completeText: "Done", // Optional button value, default: ""
-                style: .error, // Styles - see below.
-                colorStyle: UInt(UIColor.flatRed.hexValue(), radix: 16),
-                colorTextButton: UInt(UIColor.flatRed.hexValue(), radix: 16)
-            )
-            
-
-        }
-    }
+   
     
     func yesButtonClicked() {
         
         
-        showAlert(isRight: self.currentAnswer)
+        showAlert(isRight: self.currentAnswer){
+            self.nextButtonClicked()
+        }
         
         
         
@@ -419,7 +401,9 @@ class GameViewController: UIViewController {
     }
     
     func noButtonClicked() {
-        showAlert(isRight: !self.currentAnswer)
+        showAlert(isRight: !self.currentAnswer) {
+            self.nextButtonClicked()
+        }
         print("no Button Clicked")
     }
     
@@ -427,10 +411,10 @@ class GameViewController: UIViewController {
         print("tips Button Clicked")
         
         SCLAlertView().showTitle(
-            "Tips", // Title of view
-            subTitle: "You can use finger rotate the box.", // String of view
+            "tips".localized(withComment: ""), // Title of view
+            subTitle: "tips_detail".localized(withComment: ""), // String of view
             duration: 2.0, // Duration to show before closing automatically, default: 0.0
-            completeText: "Done", // Optional button value, default: ""
+            completeText: "done".localized(withComment: ""), // Optional button value, default: ""
             style: .success, // Styles - see below.
             colorStyle: 0xA429FF,
             colorTextButton: 0xFFFFFF
@@ -446,14 +430,22 @@ class GameViewController: UIViewController {
     func nextButtonClicked() {
         
         buildQuestions()
-        mainBoxView.allowsCameraControl = false
+        mainBoxView.allowsCameraControl = true
         
     }
     
+    
     func animationBox() {
         
-        let boxRatation = SCNAction.rotateBy(x: 0, y: 1, z: 0, duration: 1);
-        boxNode.runAction(boxRatation)
+        let boxRatation = SCNAction.rotateBy(x: 0, y: 1, z: 0, duration: 0.5);
+        
+        let boxRatation1 = SCNAction.rotateBy(x: 0, y: -1, z: 0, duration: 0.5);
+        
+       
+        
+        boxNode.runAction(boxRatation) {
+            self.boxNode.runAction(boxRatation1)
+        }
         
         
     }

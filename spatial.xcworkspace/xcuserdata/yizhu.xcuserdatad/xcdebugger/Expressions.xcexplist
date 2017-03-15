@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "SnakeCubeController.buildMaterialArray() -&gt; [SCNMaterial]:SnakeCubeController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "colorArrayIndex">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
