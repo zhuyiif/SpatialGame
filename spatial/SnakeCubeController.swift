@@ -91,6 +91,7 @@ class SnakeCubeController: SpatialBaseController {
         blackListTuple.append((1,9,13))
         blackListTuple.append((13,9,3))
         blackListTuple.append((3,7,13))
+        blackListTuple.append((5,9,1))
     }
     
     func setupBlackList1(){
