@@ -20,3 +20,7 @@
 "tips" = "Tips";
 "tips_detail" = "You can use finger rotate the box.";
 "back" = "Back";
+
+"fold_up" = "Fold up";
+"fold_down" = "Fold down";
+"fold_tips" = "There are 2 folding ways.(Fold up and Fold Down)";

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Material
 import SnapKit
-
+import SCLAlertView
 
 class MainController: UIViewController {
     
@@ -36,7 +36,7 @@ class MainController: UIViewController {
         
         self.view.addSubview(snakeCubeButton)
         
-     
+        
         
         snakeCubeButton.imageView?.contentMode = .scaleAspectFit
         
@@ -77,7 +77,7 @@ class MainController: UIViewController {
             make.left.equalTo(self.singleCubeButton)
             make.right.equalTo(self.singleCubeButton)
             
-           
+            
             
         }
         
@@ -86,24 +86,45 @@ class MainController: UIViewController {
         singleCubeButton.addTarget(self, action:#selector(self.singleButtonClicked), for: .touchUpInside)
         
         
-
+        
     }
     
     func singleButtonClicked() {
-       
+        
         print("singleButtonClicked Button Clicked")
-        let gameViewCtrl = GameViewController()
+        let intructionCtrl = CubeInstructionController()
         
-        self.navigationController!.pushViewController(gameViewCtrl, animated: true)
-
-    }
-    
-    func snakeButtonClicked() {
+        let defaults = UserDefaults.standard
+        if let name = defaults.string(forKey: "firstsinglecube") {
+            print(name)
+            
+                        let gameViewCtrl = GameViewController()
+                        self.navigationController!.pushViewController(gameViewCtrl, animated: true)
+            
+        }
+            
+                else {
+                defaults.set("show", forKey: "firstsinglecube")
+                
+                
+                self.navigationController!.present(intructionCtrl, animated: true, completion: {
+                
+                let gameViewCtrl = GameViewController()
+                
+                self.navigationController!.pushViewController(gameViewCtrl, animated: true)
+                })
+            }
+            
+            
+            
+        }
         
-        print("snake Button Clicked")
-        let gameViewCtrl = SnakeCubeController()
-        
-        self.navigationController!.pushViewController(gameViewCtrl, animated: true)
-        
-    }
+        func snakeButtonClicked() {
+            
+            print("snake Button Clicked")
+            let gameViewCtrl = SnakeCubeController()
+            
+            self.navigationController!.pushViewController(gameViewCtrl, animated: true)
+            
+        }
 }
