@@ -126,17 +126,23 @@ class DiceView: UIView {
         
         self.frontImageView = UIImageView(frame: CGRect(x: marginx + diceSize * 2 , y: marginy + diceSize * 2 , width: diceSize, height: diceSize))
         
-       
+        
     }
     
     func buildMode3() {
-        self.leftImageView = UIImageView(frame: CGRect(x: marginx, y: marginy + diceSize, width: diceSize, height: diceSize))
+        
         self.bottomImageView = UIImageView(frame: CGRect(x: marginx + diceSize, y: marginy + diceSize, width: diceSize, height: diceSize))
         self.rightImageView = UIImageView(frame: CGRect(x: marginx + diceSize * 2, y: marginy + diceSize, width: diceSize, height: diceSize))
-        self.topImageView = UIImageView(frame: CGRect(x: marginx + diceSize * 3, y: marginy + diceSize, width: diceSize, height: diceSize))
         
         self.backImageView = UIImageView(frame: CGRect(x: marginx + diceSize , y: marginy , width: diceSize, height: diceSize))
-        self.frontImageView = UIImageView(frame: CGRect(x: marginx + diceSize , y: marginy + diceSize * 2 , width: diceSize, height: diceSize))
+        
+        self.leftImageView = UIImageView(frame: CGRect(x: marginx  , y: marginy , width: diceSize, height: diceSize))
+        
+        self.frontImageView = UIImageView(frame: CGRect(x: marginx + diceSize * 2 , y: marginy + diceSize * 2 , width: diceSize, height: diceSize))
+        
+        self.topImageView = UIImageView(frame: CGRect(x: marginx + diceSize * 3 , y: marginy + diceSize * 2 , width: diceSize, height: diceSize))
+        
+        
     }
     
     init(frame: CGRect, mode: DiceViewMode) {
