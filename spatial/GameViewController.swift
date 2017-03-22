@@ -94,7 +94,7 @@ class GameViewController: SpatialBaseController {
     
     func setupDiceView() {
         
-        diceView = DiceView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height*4/10.0))
+        diceView = DiceView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height*4/10.0), mode:DiceViewMode.mode2)
         self.view.addSubview(diceView)
         diceView.backgroundColor = UIColor.flatBlack
         

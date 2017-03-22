@@ -10,23 +10,55 @@ import Foundation
 import UIKit
 
 
+enum DiceViewMode {
+    /*
+     
+     x
+     x   x   x   x
+     x
+     
+     */
+    case mode1
+    
+    /*
+     
+     x
+     x   x   x   x
+     x
+     
+     */
+    case mode2
+    
+    /*
+     
+     x   x
+     x   x
+     x  x
+     
+     */
+    case mode3
+}
 
 
 class DiceView: UIView {
     
-    var topImageView: UIImageView
-    var bottomImageView: UIImageView
-    var frontImageView: UIImageView
-    var backImageView: UIImageView
-    var rightImageView: UIImageView
-    var leftImageView: UIImageView
+    var topImageView: UIImageView!
+    var bottomImageView: UIImageView!
+    var frontImageView: UIImageView!
+    var backImageView: UIImageView!
+    var rightImageView: UIImageView!
+    var leftImageView: UIImageView!
     
-    override init(frame: CGRect) {
+    var viewMode:DiceViewMode!
+    
+    var marginx:Int!
+    var marginy:Int!
+    var diceSize:Int!
+    
+    func computeMarginAndDiceSize(width: CGFloat) {
+        let diceViewWidth = width * (1 - (CGFloat)(Constants.DICE_VIEW_MARGIN_RATIO * 2))
         
-        let screenWidth = frame.width
-        let diceViewWidth = screenWidth * (1 - (CGFloat)(Constants.DICE_VIEW_MARGIN_RATIO * 2))
         
-        var diceSize = 0;
         if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad {
             diceSize = (Int) (diceViewWidth/6)
             
@@ -35,16 +67,24 @@ class DiceView: UIView {
         {
             diceSize = (Int) (diceViewWidth/5)
         }
+        
+        marginy = (Int) (width * (CGFloat)(Constants.DICE_VIEW_MARGIN_RATIO))
+        
+        marginx = marginy + diceSize!
+        
+    }
     
-        let margin = (Int) (screenWidth * (CGFloat)(Constants.DICE_VIEW_MARGIN_RATIO))
+    override init(frame: CGRect) {
         
-        self.leftImageView = UIImageView(frame: CGRect(x: margin, y: margin + diceSize, width: diceSize, height: diceSize))
-        self.bottomImageView = UIImageView(frame: CGRect(x: margin + diceSize, y: margin + diceSize, width: diceSize, height: diceSize))
-        self.rightImageView = UIImageView(frame: CGRect(x: margin + diceSize * 2, y: margin + diceSize, width: diceSize, height: diceSize))
-        self.topImageView = UIImageView(frame: CGRect(x: margin + diceSize * 3, y: margin + diceSize, width: diceSize, height: diceSize))
+        super.init(frame: frame)
         
-        self.backImageView = UIImageView(frame: CGRect(x: margin + diceSize , y: margin , width: diceSize, height: diceSize))
-        self.frontImageView = UIImageView(frame: CGRect(x: margin + diceSize , y: margin + diceSize * 2 , width: diceSize, height: diceSize))
+        viewMode = DiceViewMode.mode1
+        
+        let screenWidth = frame.width
+        
+        computeMarginAndDiceSize(width: screenWidth)
+        
+        buildMode1()
         
         self.leftImageView.backgroundColor = UIColor.red
         self.bottomImageView.backgroundColor = UIColor.yellow
@@ -53,9 +93,6 @@ class DiceView: UIView {
         self.backImageView.backgroundColor = UIColor.brown
         self.frontImageView.backgroundColor = UIColor.magenta
         
-      
-        
-        super.init(frame: frame)
         
         self.addSubview(self.topImageView)
         self.addSubview(self.bottomImageView)
@@ -64,11 +101,75 @@ class DiceView: UIView {
         self.addSubview(self.rightImageView)
         self.addSubview(self.leftImageView)
         
-      
+        
     }
     
-  
-
+    
+    func buildMode1() {
+        self.leftImageView = UIImageView(frame: CGRect(x: marginx, y: marginy + diceSize, width: diceSize, height: diceSize))
+        self.bottomImageView = UIImageView(frame: CGRect(x: marginx + diceSize, y: marginy + diceSize, width: diceSize, height: diceSize))
+        self.rightImageView = UIImageView(frame: CGRect(x: marginx + diceSize * 2, y: marginy + diceSize, width: diceSize, height: diceSize))
+        self.topImageView = UIImageView(frame: CGRect(x: marginx + diceSize * 3, y: marginy + diceSize, width: diceSize, height: diceSize))
+        
+        self.backImageView = UIImageView(frame: CGRect(x: marginx + diceSize , y: marginy , width: diceSize, height: diceSize))
+        self.frontImageView = UIImageView(frame: CGRect(x: marginx + diceSize , y: marginy + diceSize * 2 , width: diceSize, height: diceSize))
+    }
+    
+    func buildMode2() {
+        
+        self.bottomImageView = UIImageView(frame: CGRect(x: marginx, y: marginy + diceSize, width: diceSize, height: diceSize))
+        self.rightImageView =  UIImageView(frame: CGRect(x: marginx + diceSize, y: marginy + diceSize, width: diceSize, height: diceSize))
+        self.topImageView = UIImageView(frame: CGRect(x: marginx + diceSize * 2, y: marginy + diceSize, width: diceSize, height: diceSize))
+        self.leftImageView = UIImageView(frame: CGRect(x: marginx + diceSize * 3, y: marginy + diceSize, width: diceSize, height: diceSize))
+        
+        self.backImageView = UIImageView(frame: CGRect(x: marginx  , y: marginy , width: diceSize, height: diceSize))
+        
+        self.frontImageView = UIImageView(frame: CGRect(x: marginx + diceSize * 2 , y: marginy + diceSize * 2 , width: diceSize, height: diceSize))
+        
+       
+    }
+    
+    func buildMode3() {
+        self.leftImageView = UIImageView(frame: CGRect(x: marginx, y: marginy + diceSize, width: diceSize, height: diceSize))
+        self.bottomImageView = UIImageView(frame: CGRect(x: marginx + diceSize, y: marginy + diceSize, width: diceSize, height: diceSize))
+        self.rightImageView = UIImageView(frame: CGRect(x: marginx + diceSize * 2, y: marginy + diceSize, width: diceSize, height: diceSize))
+        self.topImageView = UIImageView(frame: CGRect(x: marginx + diceSize * 3, y: marginy + diceSize, width: diceSize, height: diceSize))
+        
+        self.backImageView = UIImageView(frame: CGRect(x: marginx + diceSize , y: marginy , width: diceSize, height: diceSize))
+        self.frontImageView = UIImageView(frame: CGRect(x: marginx + diceSize , y: marginy + diceSize * 2 , width: diceSize, height: diceSize))
+    }
+    
+    init(frame: CGRect, mode: DiceViewMode) {
+        
+        super.init(frame: frame)
+        let screenWidth = frame.width
+        
+        computeMarginAndDiceSize(width: screenWidth)
+        
+        switch mode {
+        case .mode1:
+            buildMode1()
+        case .mode2:
+            buildMode2()
+        case .mode3:
+            buildMode3()
+        }
+        
+        self.leftImageView.backgroundColor = UIColor.red
+        self.bottomImageView.backgroundColor = UIColor.yellow
+        self.rightImageView.backgroundColor = UIColor.blue
+        self.topImageView.backgroundColor = UIColor.green
+        self.backImageView.backgroundColor = UIColor.brown
+        self.frontImageView.backgroundColor = UIColor.magenta
+        
+        self.addSubview(self.topImageView)
+        self.addSubview(self.bottomImageView)
+        self.addSubview(self.frontImageView)
+        self.addSubview(self.backImageView)
+        self.addSubview(self.rightImageView)
+        self.addSubview(self.leftImageView)
+    }
+    
     
     convenience init() {
         self.init(frame: CGRect.zero)
@@ -93,16 +194,16 @@ class DiceView: UIView {
                 print("error")
             }
         }
-     
+        
         
         self.setNeedsDisplay()
         
-      
+        
         
     }
     required init(coder aDecoder: NSCoder) {
         fatalError("This class does not support NSCoding")
     }
     
-  
+    
 }
